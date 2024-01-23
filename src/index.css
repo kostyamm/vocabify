@@ -1,0 +1,22 @@
+:root {
+  --color-primary: #42b883;
+  --header-bg: rgba(26,26,26, 0.9);
+  --color-bg-layout: #1a1a1a;
+  --color-bg-container: #2f2f2f;
+  --color-border-1: rgba(84, 84, 84, .65);
+  --color-border-2: rgba(84, 84, 84, .48);
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  position: relative;
+}
