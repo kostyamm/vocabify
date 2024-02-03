@@ -8,7 +8,7 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 export const AppHeader = () => {
     return (
         <AppBar position="sticky">
-            <Container>
+            <Container maxWidth="xl">
                 <Toolbar variant="dense" disableGutters>
                     <Offset />
 

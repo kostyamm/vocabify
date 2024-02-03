@@ -1,38 +1,19 @@
-// import { theme, ThemeConfig } from 'antd';
-// const { darkAlgorithm } = theme;
-
-// export const lightTheme: ThemeConfig = {}
-// export const darkTheme: ThemeConfig = {
-//     algorithm: darkAlgorithm,
-//     components: {
-//         Layout: {
-//             headerBg: 'rgba(26,26,26, 0.9)',
-//             headerPadding: '0 20px',
-//             headerHeight: 64,
-//         },
-//         Menu: {
-//             itemBg: 'transparent',
-//             lineWidth: 0,
-//         },
-//     },
-//     token: {
-//         borderRadius: 8,
-//         colorPrimary: '#42b883',
-//         colorPrimaryBg: 'rgba(66,184,131,0.6)',
-//         colorLink: '#42b883',
-//         colorBgContainer: '#2f2f2f',
-//         colorBgLayout: '#1a1a1a',
-//
-//         colorBorder: 'rgba(84, 84, 84, .48)',
-//         colorPrimaryBorder: 'rgba(84, 84, 84, .48)',
-//         colorBorderSecondary: 'rgba(84, 84, 84, .48)',
-//     },
-// };
-
 import { ThemeMode } from '../contexts';
 import { createTheme, LinkProps } from '@mui/material';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 import { forwardRef } from 'react';
+
+const BASE_PALETTE = {
+    colorPrimary: '#42b883',
+    colorPrimaryBg: 'rgba(66,184,131,0.6)',
+
+    colorBgDefault: '#1a1a1a',
+    colorBgPaper: '#242424',
+
+    colorBorder: 'rgba(84, 84, 84, .48)',
+
+    borderRadius: 8,
+};
 
 const LinkBehavior = forwardRef<
     HTMLAnchorElement,
@@ -43,34 +24,42 @@ const LinkBehavior = forwardRef<
     return <RouterLink ref={ref} to={href} {...other} />;
 });
 
-export const lightTheme = createTheme({})
+export const lightTheme = createTheme({});
 export const darkTheme = createTheme({
+    shape: {
+        borderRadius: BASE_PALETTE.borderRadius,
+    },
     palette: {
         mode: 'dark',
         contrastThreshold: 4.5,
         background: {
-            default: 'rgb(16, 20, 24)',
-            paper: 'rgba(16, 20, 24, 0.8)',
+            default: BASE_PALETTE.colorBgDefault,
+            paper: BASE_PALETTE.colorBgPaper,
+        },
+        primary: {
+            main: BASE_PALETTE.colorPrimary,
         },
     },
     components: {
-        MuiContainer: {
-            defaultProps: {
-                maxWidth: 'xl'
-            }
-        },
         MuiAppBar: {
             styleOverrides: {
                 root: {
-                    backdropFilter: 'blur(8px)',
+                    background: 'transparent',
+                    borderBottom: `1px solid ${BASE_PALETTE.colorBorder}`,
                     boxShadow: 'none',
                 },
             },
         },
-        MuiToolbar: {
+        MuiContainer: {
+            defaultProps: {
+                maxWidth: 'lg',
+            },
+        },
+        MuiMenu: {
             styleOverrides: {
-                root: {
-                    background: 'transparent',
+                paper: {
+                    background: BASE_PALETTE.colorBgDefault,
+                    border: `1px solid ${BASE_PALETTE.colorBorder}`,
                 },
             },
         },
@@ -81,13 +70,13 @@ export const darkTheme = createTheme({
         },
         MuiButton: {
             defaultProps: {
-                size: 'small'
-            }
+                size: 'small',
+            },
         },
         MuiTextField: {
             defaultProps: {
-                size: 'small'
-            }
+                size: 'small',
+            },
         },
         MuiButtonBase: {
             defaultProps: {
@@ -99,5 +88,5 @@ export const darkTheme = createTheme({
 
 export const appThemes = {
     [ThemeMode.Dark]: darkTheme,
-    [ThemeMode.Light]: lightTheme
-}
+    [ThemeMode.Light]: lightTheme,
+};

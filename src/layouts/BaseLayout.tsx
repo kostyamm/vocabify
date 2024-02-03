@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Container } from '@mui/material';
 import { AppHeader } from './AppHeader';
+import { AppContent } from './AppContent';
 
 export const BaseLayout = () => {
     return (
@@ -9,13 +8,5 @@ export const BaseLayout = () => {
             <AppHeader />
             <AppContent />
         </Fragment>
-    );
-};
-
-const AppContent = () => {
-    return (
-        <Container>
-            <Outlet />
-        </Container>
     );
 };
