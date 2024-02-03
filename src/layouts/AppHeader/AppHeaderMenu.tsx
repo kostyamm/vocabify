@@ -13,21 +13,36 @@ import {
     MenuItem,
 } from '@mui/material';
 import { Fragment, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ContrastOutlinedIcon from '@mui/icons-material/ContrastOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import { useNavigate } from 'react-router-dom';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 
 export const AppHeaderMenu = () => {
-    const { isAuth, login } = useAuthContext();
+    const { isAuth } = useAuthContext();
+    const navigate = useNavigate();
 
     if (!isAuth) {
         return (
             <ButtonGroup variant="outlined">
-                <Button onClick={() => login('asds')}>Log in</Button>
-                <Button>Sing up</Button>
+                <Button
+                    onClick={() => navigate('/login')}
+                    size="small"
+                    startIcon={<LoginOutlinedIcon />}
+                >
+                    Log in
+                </Button>
+                <Button
+                    onClick={() => navigate('/registration')}
+                    size="small"
+                    startIcon={<PersonAddOutlinedIcon />}
+                >
+                    Sing up
+                </Button>
             </ButtonGroup>
         );
     }
@@ -44,7 +59,7 @@ export const AppHeaderMenu = () => {
 };
 
 const AccountMenu = () => {
-    const { logOut } = useAuthContext()
+    const { logOut } = useAuthContext();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -81,7 +96,7 @@ const AccountMenu = () => {
                         elevation: 0,
                         sx: {
                             width: 200,
-                            mt: 0.7
+                            mt: 0.7,
                         },
                     },
                 }}
@@ -99,7 +114,7 @@ const AccountMenu = () => {
                     <ListItemIcon>
                         <LogoutOutlinedIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText>Logout</ListItemText>
+                    <ListItemText>Log out</ListItemText>
                 </MenuItem>
             </Menu>
         </Fragment>
@@ -159,7 +174,7 @@ const ThemeMenu = () => {
                         elevation: 0,
                         sx: {
                             width: 200,
-                            mt: 1.1
+                            mt: 1.1,
                         },
                     },
                 }}
@@ -194,7 +209,7 @@ const MenuDivider = () => {
         return {
             height: 32,
             marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1)
+            marginRight: theme.spacing(1),
         };
     };
 

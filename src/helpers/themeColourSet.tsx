@@ -7,12 +7,12 @@ const BASE_PALETTE = {
     colorPrimary: '#42b883',
     colorPrimaryBg: 'rgba(66,184,131,0.6)',
 
-    colorBgDefault: '#1a1a1a',
-    colorBgPaper: '#242424',
+    colorBgDefault: '#161616',
+    colorBgPaper: '#181818',
 
     colorBorder: 'rgba(84, 84, 84, .48)',
 
-    borderRadius: 8,
+    borderRadius: 12,
 };
 
 const LinkBehavior = forwardRef<
@@ -57,9 +57,9 @@ export const darkTheme = createTheme({
         MuiDivider: {
             styleOverrides: {
                 vertical: {
-                    borderColor: BASE_PALETTE.colorBorder
-                }
-            }
+                    borderColor: BASE_PALETTE.colorBorder,
+                },
+            },
         },
         MuiMenu: {
             styleOverrides: {
@@ -69,17 +69,26 @@ export const darkTheme = createTheme({
                 },
             },
         },
+        MuiFormHelperText: {
+            styleOverrides: {
+                root: {
+                    position: 'absolute',
+                    bottom: '-20px',
+                },
+            },
+        },
         MuiLink: {
             defaultProps: {
+                underline: 'hover',
                 component: LinkBehavior,
             } as LinkProps,
         },
-        MuiButton: {
-            defaultProps: {
-                size: 'small',
-            },
-        },
         MuiTextField: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 16,
+                },
+            },
             defaultProps: {
                 size: 'small',
             },

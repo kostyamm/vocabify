@@ -1,7 +1,7 @@
 import { object, string, InferType } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
+import { Button, Grid, Link, Paper, Stack, TextField, Typography } from '@mui/material';
 import { useCallback } from 'react';
 
 const registrationFormSchema = object({
@@ -30,41 +30,72 @@ export const Registration = () => {
         console.log(values);
     }, []);
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-                error={!!errors.email}
-                label="Email"
-                type="text"
-                variant="outlined"
-                helperText={errors.email?.message}
-                {...register('email')}
-            />
-            <TextField
-                error={!!errors.username}
-                label="Username"
-                type="text"
-                variant="outlined"
-                helperText={errors.username?.message}
-                {...register('username')}
-            />
-            <TextField
-                error={!!errors.password}
-                label="Password"
-                type="password"
-                variant="outlined"
-                helperText={errors.password?.message}
-                {...register('password')}
-            />
-            <TextField
-                error={!!errors.confirmPassword}
-                label="Password confirmation"
-                type="password"
-                variant="outlined"
-                helperText={errors.confirmPassword?.message}
-                {...register('confirmPassword')}
-            />
-            <Button variant="outlined" type="submit">Submit</Button>
-        </form>
+        <Stack maxWidth={500} sx={{ mx: 'auto', mt: 5 }}>
+            <Paper sx={{ px: 3, py: 4 }}>
+                <Typography variant="h1" gutterBottom={true}>
+                    Sign up
+                </Typography>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                error={!!errors.email}
+                                label="Email"
+                                type="text"
+                                variant="outlined"
+                                helperText={errors.email?.message}
+                                {...register('email')}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                error={!!errors.username}
+                                label="Username"
+                                type="text"
+                                variant="outlined"
+                                helperText={errors.username?.message}
+                                {...register('username')}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                error={!!errors.password}
+                                label="Password"
+                                type="password"
+                                variant="outlined"
+                                helperText={errors.password?.message}
+                                {...register('password')}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                error={!!errors.confirmPassword}
+                                label="Password confirmation"
+                                type="password"
+                                variant="outlined"
+                                helperText={errors.confirmPassword?.message}
+                                {...register('confirmPassword')}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography align="right">
+                                <Link href="/forgot">Forgot password</Link>
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button fullWidth variant="contained" type="submit">Sign Up</Button>
+                            <Typography>
+                                Or <Link href="/login">Log in now!</Link>
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Paper>
+        </Stack>
     );
 };
 
