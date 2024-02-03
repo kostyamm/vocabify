@@ -44,9 +44,8 @@ export const darkTheme = createTheme({
         MuiAppBar: {
             styleOverrides: {
                 root: {
-                    background: 'transparent',
-                    borderBottom: `1px solid ${BASE_PALETTE.colorBorder}`,
-                    boxShadow: 'none',
+                    background: BASE_PALETTE.colorBgDefault,
+                    boxShadow: `inset 0 -1px 0 ${BASE_PALETTE.colorBorder}`,
                 },
             },
         },
@@ -54,6 +53,13 @@ export const darkTheme = createTheme({
             defaultProps: {
                 maxWidth: 'lg',
             },
+        },
+        MuiDivider: {
+            styleOverrides: {
+                vertical: {
+                    borderColor: BASE_PALETTE.colorBorder
+                }
+            }
         },
         MuiMenu: {
             styleOverrides: {

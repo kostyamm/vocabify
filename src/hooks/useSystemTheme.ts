@@ -1,4 +1,4 @@
-import { ThemeMode } from '../contexts/AppThemeContext.types.tsx';
+import { ThemeMode } from '../contexts';
 import { useEffect, useState } from 'react';
 
 type DetectedTheme = ThemeMode.Dark | ThemeMode.Light

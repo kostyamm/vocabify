@@ -1,7 +1,7 @@
 import { object, string, InferType } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
+import { Button, Grid, Paper, TextField } from '@mui/material';
 import { useCallback } from 'react';
 
 const loginFormSchema = object({
@@ -26,25 +26,46 @@ export const Login = () => {
         console.log(values);
     }, []);
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-                error={!!errors.email}
-                label="Email"
-                type="text"
-                variant="outlined"
-                helperText={errors.email?.message}
-                {...register('email')}
-            />
-            <TextField
-                error={!!errors.password}
-                label="Password"
-                type="pa"
-                variant="outlined"
-                helperText={errors.password?.message}
-                {...register('password')}
-            />
-            <Button variant="outlined" type="submit">Submit</Button>
-        </form>
+        <Paper sx={{ root: { height: '100%' } }}>
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Grid item xs={8}>
+                    xs=8
+                </Grid>
+                <Grid item xs={4}>
+                    xs=4
+                </Grid>
+                <Grid item xs={4}>
+                    xs=4
+                </Grid>
+                <Grid item xs={8}>
+                    xs=8
+                </Grid>
+            </Grid>
+        </Paper>
+        // <form onSubmit={handleSubmit(onSubmit)}>
+        //     <TextField
+        //         error={!!errors.email}
+        //         label="Email"
+        //         type="text"
+        //         variant="outlined"
+        //         helperText={errors.email?.message}
+        //         {...register('email')}
+        //     />
+        //     <TextField
+        //         error={!!errors.password}
+        //         label="Password"
+        //         type="pa"
+        //         variant="outlined"
+        //         helperText={errors.password?.message}
+        //         {...register('password')}
+        //     />
+        //     <Button variant="outlined" type="submit">Submit</Button>
+        // </form>
 
         // <Form
         //     name="login_form"

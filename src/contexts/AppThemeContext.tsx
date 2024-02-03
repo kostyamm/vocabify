@@ -7,25 +7,29 @@ import { useSystemTheme } from '../hooks/useSystemTheme.ts';
 
 const AppThemeContext = createContext<AppThemeContextProps | null>(null);
 
-const THEME_STORAGE_KEY = 'theme'
-
 const { Light, Dark, System } = ThemeMode
 
+const THEME_STORAGE_KEY = 'theme'
+const DEFAULT_THEME = Dark
+
 export const AppThemeProvider = (({ children }: AppThemeProviderProps) => {
-    const [theme, setTheme] = useLocalStorage(THEME_STORAGE_KEY, Dark)
+    const [storageTheme, setStorageTheme] = useLocalStorage(THEME_STORAGE_KEY, DEFAULT_THEME)
     const { detectedTheme } = useSystemTheme()
-    const shouldDetect = theme === System
+    const shouldDetect = storageTheme === System
 
-    const activeTheme = shouldDetect ? detectedTheme : theme
+    const activeTheme = shouldDetect ? detectedTheme : storageTheme
+
     const isDarkTheme = activeTheme !== Light
+    const isCorrectTheme = Object.values(ThemeMode).some((theme) => theme === activeTheme)
 
-    const themeVariant = appThemes[activeTheme]
+    const themeVariant = appThemes[isCorrectTheme ? activeTheme : DEFAULT_THEME]
+    const theme = isCorrectTheme ? storageTheme : DEFAULT_THEME
 
     const context = useMemo(() => ({
         theme,
         isDarkTheme,
-        setTheme,
-    }), [theme]);
+        setTheme: setStorageTheme,
+    }), [storageTheme]);
 
     return (
         <AppThemeContext.Provider value={context}>

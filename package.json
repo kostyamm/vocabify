@@ -16,7 +16,6 @@
     "@mui/icons-material": "^5.15.7",
     "@mui/material": "^5.15.7",
     "axios": "^1.6.5",
-    "material-ui-popup-state": "^5.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.0",
