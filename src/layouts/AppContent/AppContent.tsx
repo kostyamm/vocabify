@@ -1,44 +1,23 @@
-import { Container, useMediaQuery, useTheme } from '@mui/material';
+import { Layout, theme } from 'antd';
+import { Container } from '../../components/Container';
 import { Outlet } from 'react-router-dom';
 
+const { useToken } = theme;
+
 export const AppContent = () => {
-    const containerSx = useContainerSx()
+    const { token } = useToken();
+
+    const contentStyle = {
+        minHeight: `calc(100dvh - ${token.Layout?.headerHeight}px)`,
+        height: '100%',
+        padding: '24px 0',
+    };
+
     return (
-        <Container sx={containerSx}>
-            <Outlet />
-        </Container>
+        <Layout.Content style={contentStyle}>
+            <Container>
+                <Outlet />
+            </Container>
+        </Layout.Content>
     );
 };
-
-const useContainerSx = () => {
-    const { spacing } = useTheme()
-    const appBarHeight = useAppBarHeight()
-
-    return {
-        height: '100%',
-        minHeight: `calc(100dvh - ${appBarHeight}px)`,
-        paddingTop: spacing(3),
-        paddingBottom: spacing(3),
-    }
-}
-
-const useAppBarHeight = (): number => {
-    const { mixins, breakpoints } = useTheme();
-    const toolbar: { [k: string]: any } = mixins.toolbar
-
-    const toolbarDesktopQuery = breakpoints.up('sm');
-    const toolbarLandscapeQuery = `${breakpoints.up('xs')} and (orientation: landscape)`;
-
-    const isDesktop = useMediaQuery(toolbarDesktopQuery);
-    const isLandscape = useMediaQuery(toolbarLandscapeQuery);
-
-    if (isDesktop) {
-        return toolbar[toolbarDesktopQuery].minHeight
-    }
-
-    if (isLandscape) {
-        return toolbar[toolbarLandscapeQuery].minHeight
-    }
-
-    return toolbar.minHeight
-}

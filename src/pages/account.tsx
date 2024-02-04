@@ -1,9 +1,10 @@
-import { Fragment } from 'react';
+import { Typography } from 'antd';
+
+const { Title } = Typography;
 
 export const Account = () => {
     return (
-        <Fragment>
-            Account
-        </Fragment>
+        <Title>Account</Title>
     );
 };
+

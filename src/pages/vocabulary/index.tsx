@@ -1,12 +1,12 @@
+import { Typography } from 'antd';
 import { Fragment } from 'react';
-import { Typography } from '@mui/material';
-import { VocabularyControls } from '../../components/Vocabulary';
+
+const { Title } = Typography
 
 export const Vocabulary = () => {
     return (
         <Fragment>
-            <Typography variant="h1" gutterBottom>Vocabulary</Typography>
-            <VocabularyControls />
+            <Title>Vocabulary</Title>
         </Fragment>
     );
 };

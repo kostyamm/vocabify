@@ -1,75 +1,67 @@
-import { useCallback } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Grid, Paper, Stack, TextField, Typography, Link } from '@mui/material';
-import { object, string, InferType } from 'yup';
-import { useForm } from 'react-hook-form';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Flex, Form, Input, Typography } from 'antd';
+import { CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 
-const loginFormSchema = object({
-    email: string().required().email(),
-    password: string().required().min(5),
-});
-
-type LoginFormSchema = InferType<typeof loginFormSchema>;
+const { Title } = Typography
 
 export const Login = () => {
-    const { handleSubmit, register, formState } = useForm({
-        mode: 'all',
-        defaultValues: {
-            email: '',
-            password: '',
-        },
-        resolver: yupResolver(loginFormSchema),
-    });
-    const { errors } = formState;
-
-    const onSubmit = useCallback((values: LoginFormSchema) => {
-        console.log(values);
-    }, []);
+    const onFinish = (values: any) => {
+        console.log('Received values of form: ', values);
+    };
 
     return (
-        <Stack maxWidth={500} sx={{ mx: 'auto', mt: 5 }}>
-            <Paper sx={{ px: 3, py: 4 }}>
-                <Typography variant="h1" gutterBottom={true}>
-                    Log in
-                </Typography>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                error={!!errors.email}
-                                label="Email"
-                                type="text"
-                                variant="outlined"
-                                helperText={errors.email?.message}
-                                {...register('email')}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                error={!!errors.password}
-                                label="Password"
-                                type="password"
-                                variant="outlined"
-                                helperText={errors.password?.message}
-                                {...register('password')}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography align="right">
-                                <Link href="/forgot">Forgot password</Link>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button fullWidth variant="contained" type="submit">Log In</Button>
-                            <Typography>
-                                Or <Link href="/registration">Sign up now!</Link>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </form>
-            </Paper>
-        </Stack>
+        <Form
+            name="login"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            style={formStyle}
+        >
+            <Title>Log in</Title>
+            <Form.Item
+                name="email"
+                rules={[{ required: true, message: 'Please input your Email!' }]}
+            >
+                <Input prefix={<UserOutlined />} placeholder="Email" />
+            </Form.Item>
+            <Form.Item
+                name="password"
+                rules={[{ required: true, message: 'Please input your Password!' }]}
+            >
+                <Input
+                    prefix={<LockOutlined />}
+                    type="password"
+                    placeholder="Password"
+                />
+            </Form.Item>
+            <Form.Item>
+                <Flex justify="space-between">
+                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Link to="/forgot">
+                        Forgot password
+                    </Link>
+                </Flex>
+            </Form.Item>
+
+            <Form.Item>
+                <Flex vertical>
+                    <Button type="primary" htmlType="submit">
+                        Log in
+                    </Button>
+                    <div>
+                        Or <Link to="/registration">Sign up now!</Link>
+                    </div>
+                </Flex>
+            </Form.Item>
+        </Form>
     );
+};
+
+const formStyle: CSSProperties = {
+    width: '100%',
+    maxWidth: 600,
+    margin: '0 auto',
 };
