@@ -10,7 +10,7 @@ export const AppContent = () => {
     const contentStyle = {
         minHeight: `calc(100dvh - ${token.Layout?.headerHeight}px)`,
         height: '100%',
-        padding: '24px 0',
+        padding: '48px 0',
     };
 
     return (

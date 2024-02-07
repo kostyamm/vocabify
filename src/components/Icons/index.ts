@@ -1,3 +1,5 @@
 export * from './SunIcon.tsx'
 export * from './MoonIcon.tsx'
 export * from './SunMoonIcon.tsx'
+export * from './GraduationIcon.tsx'
+export * from './BookIcon.tsx'

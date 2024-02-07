@@ -1,7 +1,5 @@
 import Icon from '@ant-design/icons';
-import type { GetProps } from 'antd';
-
-type CustomIconComponentProps = GetProps<typeof Icon>;
+import { CustomIconProps } from './types.ts';
 
 const SunMoonSvg = () => {
     return (
@@ -21,7 +19,6 @@ const SunMoonSvg = () => {
     );
 };
 
-
-export const SunMoonIcon = (props: Partial<CustomIconComponentProps>) => (
+export const SunMoonIcon = (props: CustomIconProps) => (
     <Icon component={SunMoonSvg} {...props} />
 );

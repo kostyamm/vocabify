@@ -1,4 +1,5 @@
 import { theme, ThemeConfig } from 'antd';
+import { ThemeMode } from '../contexts';
 
 const BASE_PALETTE = {
     colorPrimary: '#42b883',
@@ -12,43 +13,53 @@ const BASE_PALETTE = {
     borderRadius: 12,
 };
 
-const { darkAlgorithm } = theme
 const lightTheme: ThemeConfig = {
     token: {
         colorPrimary: BASE_PALETTE.colorPrimary,
+        colorPrimaryBg: BASE_PALETTE.colorPrimaryBg,
         // colorPrimaryText: BASE_PALETTE.colorPrimary,
-        // colorPrimaryBg: BASE_PALETTE.colorPrimaryBg
     },
     components: {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            headerBg: 'transparent',
+            // headerBg: 'transparent',
+            headerBg: '#ffffff',
         },
         Menu: {
             lineWidth: 0,
         },
-    }
-}
+        List: {
+            margin: 24,
+        },
+    },
+};
 
 const darkTheme: ThemeConfig = {
-    algorithm: darkAlgorithm,
+    algorithm: theme.darkAlgorithm,
     token: {
         colorPrimary: BASE_PALETTE.colorPrimary,
+        colorPrimaryBg: BASE_PALETTE.colorPrimaryBg,
+        // colorPrimaryText: BASE_PALETTE.colorPrimary,
+
+        // colorBgLayout: 'white',
+        // colorBgContainer: '#141414'
     },
     components: {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            headerBg: 'transparent',
+            // headerBg: 'transparent',
+            headerBg: '#141414',
         },
         Menu: {
             lineWidth: 0,
         },
-    }
-}
-
-import { ThemeMode } from '../contexts';
+        List: {
+            margin: 24,
+        },
+    },
+};
 
 export const appThemes = {
     [ThemeMode.Dark]: darkTheme,

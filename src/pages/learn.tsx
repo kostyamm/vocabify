@@ -1,8 +1,7 @@
 import { ContentHeader } from '../components/UI/ContentHeader';
 
-export const Account = () => {
+export const Learn = () => {
     return (
-        <ContentHeader title="Account"/>
+        <ContentHeader title={'Learn'} />
     );
 };
-
