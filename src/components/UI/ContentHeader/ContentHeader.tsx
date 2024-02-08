@@ -5,7 +5,7 @@ const { Title } = Typography
 
 type ContentHeaderProps = {
     title: string,
-    action?: ReactNode
+    action?: ReactNode,
 }
 
 export const ContentHeader = ({ title, action }: ContentHeaderProps) => {

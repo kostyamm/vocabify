@@ -1,1 +1,1 @@
-export * from './GroupList.tsx'
+export * from './DictionaryList.tsx'

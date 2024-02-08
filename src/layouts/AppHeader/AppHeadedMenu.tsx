@@ -35,7 +35,7 @@ const useMenuItems = () => {
     const navigate = useNavigate();
 
     const menuItems = [
-        { key: '/vocabulary', label: 'Vocabulary', onClick: () => navigate('/vocabulary') },
+        { key: '/dictionary', label: 'Dictionary', onClick: () => navigate('/dictionary') },
         {
             key: '/account',
             label: 'Account',
