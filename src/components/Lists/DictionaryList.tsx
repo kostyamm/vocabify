@@ -3,8 +3,15 @@ import { DeleteOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icon
 import { useNavigate } from 'react-router-dom';
 import { LearnButton } from '../UI/Buttons';
 
+type DictionaryItem = {
+    id: number,
+    title: string
+    originalLanguage: string,
+    targetLanguage: string,
+}
+
 type DictionaryListProps = {
-    groups: Array<{ id: number, title: string }>
+    groups: Array<DictionaryItem>
 }
 
 export const DictionaryList = ({ groups }: DictionaryListProps) => {
@@ -26,7 +33,7 @@ export const DictionaryList = ({ groups }: DictionaryListProps) => {
                             <Card.Meta
                                 avatar={<CardMetaAvatar title={item.title} />}
                                 title={item.title}
-                                description="This is the description"
+                                description={`${item.originalLanguage} to ${item.targetLanguage}`}
                             />
                         </Skeleton>
                     </Card>

@@ -1,5 +1,5 @@
-import { Checkbox, CheckboxProps, Col, List, Row } from 'antd';
-import { Fragment, useMemo, useState } from 'react';
+import { Checkbox, CheckboxProps, Col, Flex, List, Row } from 'antd';
+import { useMemo, useState } from 'react';
 
 type Word = {
     id: number,
@@ -34,7 +34,7 @@ export const WordList = ({ words }: WordListProps) => {
     };
 
     return (
-        <Fragment>
+        <Flex gap={12} vertical>
             <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
                 Check all
             </Checkbox>
@@ -60,7 +60,7 @@ export const WordList = ({ words }: WordListProps) => {
                     )}
                 />
             </Checkbox.Group>
-        </Fragment>
+        </Flex>
     );
 };
 

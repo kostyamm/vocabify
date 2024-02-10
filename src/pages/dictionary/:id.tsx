@@ -50,7 +50,7 @@ const mockWords = [
         translation: 'Window',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: false
+        studied: true
     },
     {
         id: 6,
@@ -58,7 +58,7 @@ const mockWords = [
         translation: 'Car',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: false
+        studied: true
     },
 ];
 
@@ -73,6 +73,7 @@ export const DictionaryId = () => {
                 title={`${mockDictionary.title}`}
                 action={<LearnButton size="large" type="primary" itemId={dictionaryId!} />}
             />
+
             <WordForm />
 
             <Tabs
@@ -83,12 +84,12 @@ export const DictionaryId = () => {
                     {
                         label: 'On the study',
                         key: 'study',
-                        children: <WordList words={mockWords} />,
+                        children: <WordList words={mockWords.filter(({studied}) => !studied)} />,
                     },
                     {
                         label: 'Studied',
                         key: 'studied',
-                        children: <WordList words={[...mockWords].splice(0, 2)} />,
+                        children: <WordList words={mockWords.filter(({studied}) => studied)} />,
                     },
                 ]}
             />
