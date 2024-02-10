@@ -49,8 +49,8 @@ const darkTheme: ThemeConfig = {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            // headerBg: 'transparent',
-            headerBg: '#141414',
+            headerBg: 'transparent',
+            // headerBg: '#141414',
         },
         Menu: {
             lineWidth: 0,
