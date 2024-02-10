@@ -1,7 +1,7 @@
 import { Divider, Flex, Layout, theme } from 'antd';
 import { Container } from '../../components/Container';
 import { CSSProperties } from 'react';
-import { AppLogo } from '../../components/UI/AppLogo';
+import { AppLogo } from '../../components/AppLogo';
 import { ThemeDropdown } from './ThemeDropdown.tsx';
 import { AppHeadedMenu } from './AppHeadedMenu.tsx';
 

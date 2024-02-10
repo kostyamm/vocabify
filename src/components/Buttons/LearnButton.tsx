@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, ButtonProps } from 'antd';
-import { GraduationIcon } from '../../Icons';
+import { GraduationIcon } from '../Icons';
 
 type LearnButtonProps = Omit<ButtonProps, 'icon' | 'onClick'> & { itemId: string | number }
 

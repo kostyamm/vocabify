@@ -1,4 +1,4 @@
-import { ContentHeader } from '../../components/UI/ContentHeader';
+import { ContentHeader } from '../../components/ContentHeader';
 
 export const LearnId = () => {
     return (

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Flex } from 'antd';
-import { BookIcon } from '../../Icons';
+import { BookIcon } from '../Icons';
 
 export const AppLogo = () => {
     return (

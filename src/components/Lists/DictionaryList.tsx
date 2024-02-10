@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, Dropdown, DropdownProps, List, Skeleton, theme } from 'antd';
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { LearnButton } from '../UI/Buttons';
+import { LearnButton } from '../Buttons';
 
 type DictionaryItem = {
     id: number,

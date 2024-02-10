@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { AddGroupModal } from '../../components/Modals';
 import { DictionaryList } from '../../components/Lists';
-import { ContentHeader } from '../../components/UI/ContentHeader';
+import { ContentHeader } from '../../components/ContentHeader';
 
 const mockGroups = [
     {

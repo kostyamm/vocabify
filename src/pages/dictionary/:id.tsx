@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { Fragment, useState } from 'react';
-import { ContentHeader } from '../../components/UI/ContentHeader';
+import { ContentHeader } from '../../components/ContentHeader';
 import { WordForm } from '../../components/Forms/WordForm';
-import { LearnButton } from '../../components/UI/Buttons';
+import { LearnButton } from '../../components/Buttons';
 import { Tabs } from 'antd';
 import { WordList } from '../../components/Lists/WordList.tsx';
 
