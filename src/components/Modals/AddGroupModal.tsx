@@ -3,6 +3,7 @@ import { Button, ButtonProps, Form, Input, Modal } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useYupValidator } from '../../hooks/useYupValidator.ts';
 import { InferType, object, string } from 'yup';
+import { useCreateDictionary } from '../../api/hooks/useDictionary.ts';
 
 type OpenButton = Omit<ButtonProps, 'onClick'>
 
@@ -16,16 +17,18 @@ type OpenButtonProps = {
 }
 
 const groupFromSchema = object().shape({
-    name: string().required(),
+    title: string().required(),
 });
 
 type GroupFromSchema = InferType<typeof groupFromSchema>
 
 export const AddGroupModal = (props: AddGroupModalProps) => {
     const [open, setOpen] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false);
+
     const [form] = Form.useForm<GroupFromSchema>();
     const { yupSync, formValidate } = useYupValidator(groupFromSchema, form);
+
+    const createDictionary = useCreateDictionary()
 
     const showModal = () => setOpen(true);
     const hideModal = () => setOpen(false);
@@ -37,17 +40,12 @@ export const AddGroupModal = (props: AddGroupModalProps) => {
             return
         }
 
-        setConfirmLoading(true);
         form.submit()
-
-        setTimeout(() => {
-            setOpen(false);
-            setConfirmLoading(false);
-        }, 2000);
+        setOpen(false);
     };
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    const onFinish = async ({ title }: GroupFromSchema) => {
+        await createDictionary.mutateAsync({ title })
     };
 
     return (
@@ -58,7 +56,7 @@ export const AddGroupModal = (props: AddGroupModalProps) => {
                 open={open}
                 okText="Create"
                 onOk={handleOk}
-                confirmLoading={confirmLoading}
+                confirmLoading={createDictionary.isPending}
                 onCancel={hideModal}
             >
                 <Form
@@ -68,8 +66,8 @@ export const AddGroupModal = (props: AddGroupModalProps) => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Name"
-                        name="name"
+                        label="Group Name"
+                        name="title"
                         required
                         initialValue="New Group"
                         rules={[yupSync]}

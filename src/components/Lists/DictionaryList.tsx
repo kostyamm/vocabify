@@ -11,16 +11,16 @@ type DictionaryItem = {
 }
 
 type DictionaryListProps = {
-    groups: Array<DictionaryItem>
+    dictionaryData: Array<DictionaryItem>
 }
 
-export const DictionaryList = ({ groups }: DictionaryListProps) => {
+export const DictionaryList = ({ dictionaryData }: DictionaryListProps) => {
     const navigate = useNavigate();
 
     return (
         <List
             grid={{ gutter: 24, xs: 1, sm: 2, column: 3 }}
-            dataSource={groups}
+            dataSource={dictionaryData}
             renderItem={(item) => (
                 <List.Item>
                     <Card
