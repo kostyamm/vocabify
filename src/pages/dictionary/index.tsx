@@ -2,10 +2,10 @@ import { Fragment } from 'react';
 import { AddGroupModal } from '../../components/Modals';
 import { DictionaryList } from '../../components/Lists';
 import { ContentHeader } from '../../components/ContentHeader';
-import { useGetDictionary } from '../../api/hooks/useDictionary.ts';
+import { useDictionaryObserver } from '../../api/hooks';
 
 export const Dictionary = () => {
-    const { data } = useGetDictionary()
+    const { data } = useDictionaryObserver();
 
     return (
         <Fragment>

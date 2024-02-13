@@ -1,8 +1,10 @@
 import { axiosApiInstance } from './ApiConfig.ts';
 
 export type Dictionary = {
-    id: number;
-    title: string;
+    id: number,
+    title: string
+    originalLanguage?: string,
+    targetLanguage?: string,
 }
 
 export const getDictionary = async () => {
@@ -11,6 +13,7 @@ export const getDictionary = async () => {
         return data
     } catch (e) {
         console.error(e)
+        throw new Error(`${e}`)
     }
 }
 
@@ -20,13 +23,22 @@ export const createDictionary = async (data: Omit<Dictionary, 'id'>) => {
         return responseData
     } catch (e) {
         console.error(e)
-        throw new Error('asdasd')
+    }
+}
+
+export const updateDictionary = async (data: Dictionary) => {
+    try {
+        const { data: responseData } = await axiosApiInstance.put('/dictionary', data)
+        return responseData
+    } catch (e) {
+        console.error(e)
     }
 }
 
 export const deleteDictionary = async (id: number | string) => {
     try {
-        return await axiosApiInstance.delete(`/dictionary/${id}`)
+        const { data } = await axiosApiInstance.delete(`/dictionary/${id}`)
+        return data
     } catch (e) {
         console.error(e)
     }

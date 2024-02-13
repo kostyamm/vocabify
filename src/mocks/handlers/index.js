@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse} from 'msw'
 
 const mockDictionaryData = [
     {
@@ -55,14 +55,25 @@ export const handlers = [
         return HttpResponse.json(Array.from(dictionaryData.values()))
     }),
     http.post('/dictionary', async ({ request }) => {
-        const newPost = await request.json()
-        newPost.id = Date.now()
+        const newDictionary = await request.json()
+        newDictionary.id = Date.now()
+        newDictionary.originalLanguage = 'RU'
+        newDictionary.targetLanguage = 'EN'
 
-        dictionaryData.set(newPost.id, newPost)
+        dictionaryData.set(newDictionary.id, newDictionary)
 
-        return HttpResponse.json(newPost, { status: 201 })
+        return HttpResponse.json(newDictionary, { status: 201 })
     }),
-    // http.delete('/posts/:id', ({ params }) => {
-    //     console.log(`Captured a "DELETE /posts/${params.id}" request`)
-    // }),
+    http.put('/dictionary', async ({ request }) => {
+        const updatedDictionary = await request.json()
+
+        dictionaryData.set(updatedDictionary.id, updatedDictionary)
+
+        return HttpResponse.json(updatedDictionary, { status: 201 })
+    }),
+    http.delete('/dictionary/:id', ({ params }) => {
+        dictionaryData.delete(params.id)
+
+        return HttpResponse.json(params.id, { status: 201 })
+    }),
 ]

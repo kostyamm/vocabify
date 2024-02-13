@@ -3,7 +3,7 @@ import { Button, ButtonProps, Form, Input, Modal } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useYupValidator } from '../../hooks/useYupValidator.ts';
 import { InferType, object, string } from 'yup';
-import { useCreateDictionary } from '../../api/hooks/useDictionary.ts';
+import { useCreateDictionary } from '../../api/hooks';
 
 type OpenButton = Omit<ButtonProps, 'onClick'>
 

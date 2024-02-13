@@ -1,15 +1,15 @@
-import { QueryObserver, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createDictionary, Dictionary, getDictionary } from '../dictionary.ts';
-import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createDictionary, deleteDictionary, getDictionary, updateDictionary, Dictionary } from '../dictionary.ts';
+import { useDataObserver } from './useDataObserver.ts';
 
 const KEY = 'dictionary';
 
-export const useGetDictionary = () => {
-    return useQuery({
-        queryKey: [KEY],
-        queryFn: getDictionary,
-    });
-};
+// export const useGetDictionary = () => {
+//     return useQuery({
+//         queryKey: [KEY],
+//         queryFn: getDictionary,
+//     });
+// };
 
 export const useCreateDictionary = () => {
     const queryClient = useQueryClient();
@@ -37,52 +37,44 @@ export const useUpdateDictionary = () => {
     const queryClient = useQueryClient();
 
     const onSuccess = (newDictionary: Dictionary) => {
-        queryClient.setQueryData([KEY],
-            (prevDictionary: Array<Dictionary> | undefined) => {
-                if (prevDictionary) {
-
-                    prevDictionary.map(dictionary => {
-                        if (dictionary.id === newDictionary.id) {
-                            dictionary.title = newDictionary.title;
-                        }
-                        return dictionary;
-                    });
+        const updater = (prevDictionary: Array<Dictionary> | undefined) => {
+            return prevDictionary?.map(dictionary => {
+                if (dictionary.id === newDictionary.id) {
+                    dictionary.title = newDictionary.title;
                 }
-                return prevDictionary;
-            },
-        );
+
+                return dictionary;
+            });
+        }
+
+        queryClient.setQueryData([KEY], updater);
     };
 
     return useMutation({
         mutationKey: [KEY],
-        mutationFn: createDictionary,
+        mutationFn: updateDictionary,
         onSuccess,
     });
 };
 
-export const useGetUsersObserver = () => {
-    const get_users = useGetDictionary()
+export const useDeleteDictionary = () => {
+    const queryClient = useQueryClient();
 
-    const queryClient = useQueryClient()
+    const onSuccess = (dictionaryId: Dictionary['id']) => {
+        const updater = (dictionary: Array<Dictionary> | undefined) => {
+            return dictionary?.filter(({ id }) => id !== +dictionaryId)
+        }
 
-    const [users, setUsers] = useState<Array<Dictionary>>(() => {
-        // get data from cache
-        const data = queryClient.getQueryData<Array<Dictionary>>([KEY])
-        return data ?? []
-    })
+        queryClient.setQueryData([KEY], updater);
+    };
 
-    useEffect(() => {
-        const observer = new QueryObserver<Array<Dictionary>>(queryClient, { queryKey: [KEY] })
+    return useMutation({
+        mutationKey: [KEY],
+        mutationFn: deleteDictionary,
+        onSuccess,
+    });
+};
 
-        const unsubscribe = observer.subscribe(result => {
-            if (result.data) setUsers(result.data)
-        })
-
-        return () => { unsubscribe() }
-    }, [])
-
-    return {
-        ...get_users,
-        data: users,
-    }
+export const useDictionaryObserver = () => {
+    return useDataObserver<Dictionary>(KEY, getDictionary)
 }

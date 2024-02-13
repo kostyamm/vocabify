@@ -2,16 +2,11 @@ import { Avatar, Button, Card, Dropdown, DropdownProps, List, Skeleton, theme } 
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { LearnButton } from '../Buttons';
-
-type DictionaryItem = {
-    id: number,
-    title: string
-    originalLanguage: string,
-    targetLanguage: string,
-}
+import { useDeleteDictionary, useUpdateDictionary } from '../../api/hooks';
+import { Dictionary } from '../../api';
 
 type DictionaryListProps = {
-    dictionaryData: Array<DictionaryItem>
+    dictionaryData: Array<Dictionary>
 }
 
 export const DictionaryList = ({ dictionaryData }: DictionaryListProps) => {
@@ -26,7 +21,7 @@ export const DictionaryList = ({ dictionaryData }: DictionaryListProps) => {
                     <Card
                         hoverable
                         title={<LearnButton itemId={item.id} />}
-                        extra={<CardExtra itemId={item.id} />}
+                        extra={<CardExtra item={item} />}
                         onClick={() => navigate(`/dictionary/${item.id}`)}
                     >
                         <Skeleton loading={false} avatar active>
@@ -53,7 +48,23 @@ const CardMetaAvatar = ({ title }: { title: string }) => {
     );
 };
 
-const CardExtra = ({ itemId }: { itemId: number }) => {
+const CardExtra = ({ item }: { item: Dictionary }) => {
+    const updateDictionary = useUpdateDictionary();
+    const deleteDictionary = useDeleteDictionary();
+
+    const onUpdateDictionary = async () => {
+        const mutateData = {
+            id: item.id,
+            title: item.title + '[updated]',
+        }
+
+        await updateDictionary.mutateAsync(mutateData);
+    };
+
+    const onDeleteDictionary = async () => {
+        await deleteDictionary.mutateAsync(item.id);
+    };
+
     const dropdownItems: Required<DropdownProps>['menu']['items'] = [
         {
             key: 'edit',
@@ -61,6 +72,7 @@ const CardExtra = ({ itemId }: { itemId: number }) => {
             icon: <EditOutlined key="edit" />,
             onClick: ({ domEvent }) => {
                 domEvent.stopPropagation();
+                onUpdateDictionary();
             },
         },
         {
@@ -73,7 +85,7 @@ const CardExtra = ({ itemId }: { itemId: number }) => {
             icon: <DeleteOutlined key="delete" />,
             onClick: ({ domEvent }) => {
                 domEvent.stopPropagation();
-                console.log(`Delete action for ${itemId}`);
+                onDeleteDictionary()
             },
         },
     ];

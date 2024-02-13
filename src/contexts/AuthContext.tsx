@@ -1,6 +1,5 @@
 import { createContext, useContext, useMemo } from 'react';
 import { AuthContextProps, AuthProviderProps } from './AuthContext.types.tsx';
-import axios from 'axios';
 import { useLocalStorage } from '../hooks/useLocalStorage.ts';
 
 const TOKEN_STORAGE_KEY = 'token';
@@ -8,7 +7,10 @@ const TOKEN_STORAGE_KEY = 'token';
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider = (({ children }: AuthProviderProps) => {
-    const { token, login, logOut } = useAuth();
+    const [token, setToken] = useLocalStorage<string | null>(TOKEN_STORAGE_KEY, null);
+
+    const login = (token: string) => setToken(token);
+    const logOut = () => setToken(null);
 
     const context = useMemo(() => ({
         isAuth: !!token,
@@ -23,27 +25,6 @@ export const AuthProvider = (({ children }: AuthProviderProps) => {
         </AuthContext.Provider>
     );
 });
-
-const useAuth = () => {
-    const [token, setToken] = useLocalStorage<string | null>(TOKEN_STORAGE_KEY, null);
-
-    const login = (token: string) => {
-        setToken(token);
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    };
-
-    const logOut = () => {
-        setToken(null);
-        delete axios.defaults.headers.common['Authorization'];
-    };
-
-    return {
-        token,
-        login,
-        logOut,
-    };
-};
-
 
 export const useAuthContext = () => {
     const appContext = useContext(AuthContext);

@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { type InternalAxiosRequestConfig } from 'axios';
+import { parseJSON } from '../hooks/useLocalStorage.ts';
 
 const AXIOS_CONFIG = {
     baseURL: import.meta.env.VITE_API_URL,
@@ -8,7 +9,8 @@ const axiosApiInstance = axios.create(AXIOS_CONFIG);
 
 const getToken = () => {
     try {
-        return window.localStorage.getItem('token');
+        const token = window.localStorage.getItem('token');
+        return token && parseJSON(token);
     } catch (error) {
         throw new Error(`Error getting token ${error}`);
     }
@@ -16,7 +18,7 @@ const getToken = () => {
 
 const setToken = (token: string) => {
     try {
-        return window.localStorage.setItem('token', token);
+        return window.localStorage.setItem('token', JSON.stringify(token));
     } catch (error) {
         throw new Error(`Error setting token ${error}`);
     }
@@ -24,14 +26,14 @@ const setToken = (token: string) => {
 
 const refreshToken = async (): Promise<string> => {
     try {
-        const { data } = await axiosApiInstance.get('/refresh_token')
-        return data
+        const { data } = await axiosApiInstance.get('/refresh_token');
+        return data;
     } catch (e) {
-        throw new Error('Refresh Token Error')
+        throw new Error('Refresh Token Error');
     }
-}
+};
 
-axiosApiInstance.interceptors.request.use((config) => {
+const onFulfilled = (config: InternalAxiosRequestConfig) => {
     const authToken = getToken();
 
     if (authToken) {
@@ -39,26 +41,23 @@ axiosApiInstance.interceptors.request.use((config) => {
     }
 
     return config;
+};
+
+axiosApiInstance.interceptors.request.use(onFulfilled, async (error) => {
+    const { response, config } = error;
+
+    if (response.status === 401) {
+        const newToken = await refreshToken();
+
+        setToken(newToken);
+
+        // Retry the original request
+        return axios(config);
+    }
+
+    return Promise.reject(error);
 });
 
-axios.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const { response, config } = error
-
-        if (response.status === 401) {
-            const newToken = await refreshToken();
-
-            setToken(newToken)
-
-            // Retry the original request
-            return axios(config);
-        }
-
-        return Promise.reject(error);
-    }
-);
-
 export {
-    axiosApiInstance
-}
+    axiosApiInstance,
+};
