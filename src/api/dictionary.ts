@@ -17,6 +17,16 @@ export const getDictionary = async () => {
     }
 }
 
+export const getDictionaryById = async (id: string | number) => {
+    try {
+        const { data } = await axiosApiInstance.get(`/dictionary/${id}`)
+        return data
+    } catch (e) {
+        console.error(e)
+        throw new Error(`${e}`)
+    }
+}
+
 export const createDictionary = async (data: Omit<Dictionary, 'id'>) => {
     try {
         const { data: responseData } = await axiosApiInstance.post('/dictionary', data)

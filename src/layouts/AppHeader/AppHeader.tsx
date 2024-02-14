@@ -14,9 +14,11 @@ export const AppHeader = () => {
                 <Flex align="center" justify="space-between">
                     <AppLogo />
 
-                    <AppHeadedMenu />
-                    <Divider type="vertical" style={dividerStyle} />
-                    <ThemeDropdown />
+                    <Flex align="center" justify="flex-end" style={{ flex: 1 }}>
+                        <AppHeadedMenu />
+                        <Divider type="vertical" style={dividerStyle} />
+                        <ThemeDropdown />
+                    </Flex>
                 </Flex>
             </Container>
         </Layout.Header>

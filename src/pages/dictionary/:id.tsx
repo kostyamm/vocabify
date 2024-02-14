@@ -5,11 +5,7 @@ import { WordForm } from '../../components/Forms/WordForm';
 import { LearnButton } from '../../components/Buttons';
 import { Tabs } from 'antd';
 import { WordList } from '../../components/Lists/WordList.tsx';
-
-const mockDictionary = {
-    id: 1,
-    title: 'English',
-};
+import { useGetDictionaryById } from '../../api/hooks';
 
 const mockWords = [
     {
@@ -64,13 +60,16 @@ const mockWords = [
 
 export const DictionaryId = () => {
     const { id: dictionaryId } = useParams();
+    const { data, isLoading } = useGetDictionaryById(dictionaryId!)
 
     const [activeTab, setActiveTab] = useState('study')
+
+    if (isLoading) return <div>Loading...</div>
 
     return (
         <Fragment>
             <ContentHeader
-                title={`${mockDictionary.title}`}
+                title={`${data.title}`}
                 action={<LearnButton size="large" type="primary" itemId={dictionaryId!} />}
             />
 

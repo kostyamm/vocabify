@@ -1,15 +1,22 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createDictionary, deleteDictionary, getDictionary, updateDictionary, Dictionary } from '../dictionary.ts';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+    createDictionary,
+    deleteDictionary,
+    getDictionary,
+    updateDictionary,
+    Dictionary,
+    getDictionaryById,
+} from '../dictionary.ts';
 import { useDataObserver } from './useDataObserver.ts';
 
 const KEY = 'dictionary';
 
-// export const useGetDictionary = () => {
-//     return useQuery({
-//         queryKey: [KEY],
-//         queryFn: getDictionary,
-//     });
-// };
+export const useGetDictionaryById = (id: string | number) => {
+    return useQuery({
+        queryKey: [KEY, id],
+        queryFn: () => getDictionaryById(id),
+    });
+};
 
 export const useCreateDictionary = () => {
     const queryClient = useQueryClient();
