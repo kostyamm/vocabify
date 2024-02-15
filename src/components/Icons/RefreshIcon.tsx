@@ -1,11 +1,11 @@
-import { CustomIconProps } from './types.ts';
-import Icon from '@ant-design/icons';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const RefreshSvg = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-                 className="lucide lucide-refresh-cw">
+             stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+             className="lucide lucide-refresh-cw">
             <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
             <path d="M21 3v5h-5" />
             <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
@@ -15,5 +15,5 @@ const RefreshSvg = () => {
 };
 
 export const RefreshIcon = (props: CustomIconProps) => (
-    <Icon component={RefreshSvg} {...props} />
+    <Icon children={<RefreshSvg />} {...props} />
 );

@@ -1,7 +1,7 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Flex, Form, Input, Typography } from 'antd';
 import { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import { LockIcon, UserIcon } from '../components/Icons';
 
 const { Title } = Typography
 
@@ -24,7 +24,7 @@ export const Login = () => {
                 name="email"
                 rules={[{ required: true, message: 'Please input your Email!' }]}
             >
-                <Input prefix={<UserOutlined />} placeholder="Email" />
+                <Input prefix={<UserIcon />} placeholder="Email" />
             </Form.Item>
             <Form.Item
                 label="Password"
@@ -32,7 +32,7 @@ export const Login = () => {
                 rules={[{ required: true, message: 'Please input your Password!' }]}
             >
                 <Input
-                    prefix={<LockOutlined />}
+                    prefix={<LockIcon />}
                     type="password"
                     placeholder="Password"
                 />

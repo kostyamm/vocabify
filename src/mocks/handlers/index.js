@@ -1,5 +1,5 @@
-import { dictionary } from './dictionary.js'
+import { decks } from './decks.js'
 
 export const handlers = [
-    ...dictionary
+    ...decks
 ]

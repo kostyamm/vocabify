@@ -2,12 +2,12 @@ import { useParams } from 'react-router-dom';
 import { Fragment, useState } from 'react';
 import { ContentHeader } from '../../components/ContentHeader';
 import { WordForm } from '../../components/Forms/WordForm';
-import { LearnButton } from '../../components/Buttons';
+import { StudyButton } from '../../components/Buttons';
 import { Tabs } from 'antd';
-import { WordList } from '../../components/Lists/WordList.tsx';
-import { useGetDictionaryById } from '../../api/hooks';
+import { CardList } from '../../components/Lists/CardList.tsx';
+import { useGetDeckById } from '../../api/hooks';
 
-const mockWords = [
+const mockCards = [
     {
         id: 1,
         word: 'Привет',
@@ -58,9 +58,9 @@ const mockWords = [
     },
 ];
 
-export const DictionaryId = () => {
-    const { id: dictionaryId } = useParams();
-    const { data, isLoading } = useGetDictionaryById(dictionaryId!)
+export const DeckId = () => {
+    const { id: deckId } = useParams();
+    const { data, isLoading } = useGetDeckById(deckId!)
 
     const [activeTab, setActiveTab] = useState('study')
 
@@ -70,7 +70,7 @@ export const DictionaryId = () => {
         <Fragment>
             <ContentHeader
                 title={`${data.title}`}
-                action={<LearnButton size="large" type="primary" itemId={dictionaryId!} />}
+                action={<StudyButton size="large" type="primary" itemId={deckId!} />}
             />
 
             <WordForm />
@@ -83,12 +83,12 @@ export const DictionaryId = () => {
                     {
                         label: 'On the study',
                         key: 'study',
-                        children: <WordList words={mockWords.filter(({studied}) => !studied)} />,
+                        children: <CardList cards={mockCards.filter(({studied}) => !studied)} />,
                     },
                     {
                         label: 'Studied',
                         key: 'studied',
-                        children: <WordList words={mockWords.filter(({studied}) => studied)} />,
+                        children: <CardList cards={mockCards.filter(({studied}) => studied)} />,
                     },
                 ]}
             />

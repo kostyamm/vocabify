@@ -1,5 +1,5 @@
-import Icon from '@ant-design/icons';
-import { CustomIconProps } from './types.ts';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const BookSvg = () => {
     return (
@@ -14,5 +14,5 @@ const BookSvg = () => {
 };
 
 export const BookIcon = (props: CustomIconProps) => (
-    <Icon component={BookSvg} {...props} />
+    <Icon children={<BookSvg />} {...props} />
 );

@@ -2,21 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import { Button, ButtonProps } from 'antd';
 import { GraduationIcon } from '../Icons';
 
-type LearnButtonProps = Omit<ButtonProps, 'icon' | 'onClick'> & { itemId: string | number }
+type StudyButtonProps = Omit<ButtonProps, 'icon' | 'onClick'> & { itemId: string | number }
 
-export const LearnButton = ({ itemId, ...buttonProps }: LearnButtonProps) => {
+export const StudyButton = ({ itemId, ...buttonProps }: StudyButtonProps) => {
     const navigate = useNavigate();
 
     return (
         <Button
-            icon={<GraduationIcon key="learn" />}
+            icon={<GraduationIcon key="study" />}
             onClick={(event) => {
                 event.stopPropagation();
-                navigate(`/learn/${itemId}`);
+                navigate(`/study/${itemId}`);
             }}
             {...buttonProps}
         >
-            Learn
+            Study
         </Button>
     );
 };

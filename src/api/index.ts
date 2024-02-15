@@ -1,2 +1,2 @@
 export * from './ApiConfig.ts'
-export * from './dictionary.ts'
+export * from './decks.ts'

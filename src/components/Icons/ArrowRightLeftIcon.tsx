@@ -1,5 +1,5 @@
-import { CustomIconProps } from './types.ts';
-import Icon from '@ant-design/icons';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const ArrowRightLeftSvg = () => {
     return (
@@ -15,5 +15,5 @@ const ArrowRightLeftSvg = () => {
 };
 
 export const ArrowRightLeftIcon = (props: CustomIconProps) => (
-    <Icon component={ArrowRightLeftSvg} {...props} />
+    <Icon children={<ArrowRightLeftSvg/>} {...props} />
 );

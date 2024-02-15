@@ -1,1 +1,1 @@
-export * from './DictionaryList.tsx'
+export * from './DeckList.tsx'

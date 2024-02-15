@@ -1,7 +1,7 @@
 import { Checkbox, CheckboxProps, Col, Flex, List, Row } from 'antd';
 import { useMemo, useState } from 'react';
 
-type Word = {
+type Card = {
     id: number,
     word: string,
     translation: string,
@@ -10,16 +10,16 @@ type Word = {
     studied: boolean
 }
 
-type WordListProps = {
-    words: Array<Word>
+type CardListProps = {
+    cards: Array<Card>
 }
 
-export const WordList = ({ words }: WordListProps) => {
+export const CardList = ({ cards }: CardListProps) => {
     const [checkedList, setCheckedList] = useState<Array<number>>([]);
 
     const wordsIds = useMemo(
-        () => words.map(({ id }) => id),
-        [words],
+        () => cards.map(({ id }) => id),
+        [cards],
     );
     const indeterminate = checkedList.length > 0 && checkedList.length < wordsIds.length;
     const checkAll = wordsIds.length === checkedList.length;
@@ -42,7 +42,7 @@ export const WordList = ({ words }: WordListProps) => {
             <Checkbox.Group value={checkedList} onChange={onChange} style={checkboxStyles}>
                 <List
                     itemLayout="horizontal"
-                    dataSource={words}
+                    dataSource={cards}
                     renderItem={(item) => (
                         <List.Item>
                             <Row gutter={16}>

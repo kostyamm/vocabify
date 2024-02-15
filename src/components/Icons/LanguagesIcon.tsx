@@ -1,5 +1,5 @@
-import Icon from '@ant-design/icons';
-import { CustomIconProps } from './types.ts';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const LanguagesSvg = () => {
     return (
@@ -17,5 +17,5 @@ const LanguagesSvg = () => {
 };
 
 export const LanguagesIcon = (props: CustomIconProps) => (
-    <Icon component={LanguagesSvg} {...props} />
+    <Icon children={<LanguagesSvg />} {...props} />
 );

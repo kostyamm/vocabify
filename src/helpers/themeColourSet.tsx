@@ -4,6 +4,7 @@ import { ThemeMode } from '../contexts';
 const BASE_PALETTE = {
     colorPrimary: '#42b883',
     colorPrimaryBg: 'rgba(66,184,131,0.6)',
+    colorBgContainer: '#141414',
 
     colorBgDefault: '#161616',
     colorBgPaper: '#181818',
@@ -17,14 +18,14 @@ const lightTheme: ThemeConfig = {
     token: {
         colorPrimary: BASE_PALETTE.colorPrimary,
         colorPrimaryBg: BASE_PALETTE.colorPrimaryBg,
-        // colorPrimaryText: BASE_PALETTE.colorPrimary,
+
+        colorBgContainer: '#fff',
     },
     components: {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            // headerBg: 'transparent',
-            headerBg: '#ffffff',
+            headerBg: '#fff',
         },
         Menu: {
             lineWidth: 0,
@@ -38,19 +39,19 @@ const lightTheme: ThemeConfig = {
 const darkTheme: ThemeConfig = {
     algorithm: theme.darkAlgorithm,
     token: {
+        borderRadius: 12,
         colorPrimary: BASE_PALETTE.colorPrimary,
         colorPrimaryBg: BASE_PALETTE.colorPrimaryBg,
         // colorPrimaryText: BASE_PALETTE.colorPrimary,
 
         // colorBgLayout: 'white',
-        // colorBgContainer: '#141414'
+        colorBgContainer: BASE_PALETTE.colorBgContainer
     },
     components: {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            headerBg: 'transparent',
-            // headerBg: '#141414',
+            headerBg: BASE_PALETTE.colorBgContainer,
         },
         Menu: {
             lineWidth: 0,

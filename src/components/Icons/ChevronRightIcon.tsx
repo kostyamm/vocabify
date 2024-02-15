@@ -1,5 +1,5 @@
-import { CustomIconProps } from './types.ts';
-import Icon from '@ant-design/icons';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const ChevronRightSvg = () => {
     return (
@@ -12,5 +12,5 @@ const ChevronRightSvg = () => {
 };
 
 export const ChevronRightIcon = (props: CustomIconProps) => (
-    <Icon component={ChevronRightSvg} {...props} />
+    <Icon children={<ChevronRightSvg />} {...props} />
 );

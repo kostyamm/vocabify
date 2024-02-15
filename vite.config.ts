@@ -1,5 +1,4 @@
-import { defineConfig } from 'vite';
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
@@ -8,32 +7,26 @@ export default defineConfig({
         port: 3000,
         open: true,
     },
+    preview: {
+        port: 4040,
+        open: true,
+        strictPort: true,
+    },
     plugins: [
         react(),
-        chunkSplitPlugin({
-            strategy: 'unbundle',
-            customChunk: (args)=>{
-                // files into pages directory is export in single files
-                let { file }: any = args;
-
-                if(file.startsWith('src/pages/')){
-                    file = file.substring(4);
-                    file = file.replace(/\.[^.$]+$/, '');
-                    return file;
-                }
-                return null;
-            },
-        })
+        splitVendorChunkPlugin(),
     ],
-    // build: {
-    //     rollupOptions: {
-    //         output: {
-    //             manualChunks(id) {
-    //                 if (id.includes('node_modules')) {
-    //                     return id.toString().split('node_modules/')[1].split('/')[0].toString();
-    //                 }
-    //             },
-    //         },
-    //     },
-    // },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id: string) {
+                    if (id.includes('node_modules')) {
+                        const [_, dependencyPath] = id.split('node_modules/');
+
+                        return dependencyPath.split('/')[0];
+                    }
+                },
+            },
+        },
+    },
 });

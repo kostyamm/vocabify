@@ -1,17 +1,16 @@
 import { Icon } from './Icon.tsx';
 import { CustomIconProps } from './Icon.types.tsx';
 
-export const GraduationSvg = () => {
+const PlusSvg = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-             className="lucide lucide-graduation-cap">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+             className="lucide lucide-plus">
+            <path d="M5 12h14" />
+            <path d="M12 5v14" />
         </svg>
     );
 };
-
-export const GraduationIcon = (props: CustomIconProps) => (
-    <Icon children={<GraduationSvg />} {...props} />
+export const PlusIcon = (props: CustomIconProps) => (
+    <Icon children={<PlusSvg />} {...props} />
 );

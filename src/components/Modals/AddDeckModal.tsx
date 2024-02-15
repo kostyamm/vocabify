@@ -1,20 +1,10 @@
 import { Fragment, useState } from 'react';
-import { Button, ButtonProps, Form, Input, Modal } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Modal } from 'antd';
 import { useYupValidator } from '../../hooks/useYupValidator.ts';
 import { InferType, object, string } from 'yup';
-import { useCreateDictionary } from '../../api/hooks';
-
-type OpenButton = Omit<ButtonProps, 'onClick'>
-
-type AddGroupModalProps = {
-    openButtonProps?: OpenButton
-}
-
-type OpenButtonProps = {
-    openButtonProps?: OpenButton,
-    showModal: () => void
-}
+import { useCreateDeck } from '../../api/hooks';
+import { AddGroupModalProps, OpenButtonProps } from './AddDeckModal.types.tsx';
+import { PlusIcon } from '../Icons';
 
 const groupFromSchema = object().shape({
     title: string().required(),
@@ -22,13 +12,13 @@ const groupFromSchema = object().shape({
 
 type GroupFromSchema = InferType<typeof groupFromSchema>
 
-export const AddGroupModal = (props: AddGroupModalProps) => {
+export const AddDeckModal = (props: AddGroupModalProps) => {
     const [open, setOpen] = useState(false);
 
     const [form] = Form.useForm<GroupFromSchema>();
     const { yupSync, formValidate } = useYupValidator(groupFromSchema, form);
 
-    const createDictionary = useCreateDictionary()
+    const createDeck = useCreateDeck()
 
     const showModal = () => setOpen(true);
     const hideModal = () => setOpen(false);
@@ -45,18 +35,18 @@ export const AddGroupModal = (props: AddGroupModalProps) => {
     };
 
     const onFinish = async ({ title }: GroupFromSchema) => {
-        await createDictionary.mutateAsync({ title })
+        await createDeck.mutateAsync({ title })
     };
 
     return (
         <Fragment>
             <OpenButton showModal={showModal} openButtonProps={props.openButtonProps} />
             <Modal
-                title="Create group"
+                title="Create Deck"
                 open={open}
                 okText="Create"
                 onOk={handleOk}
-                confirmLoading={createDictionary.isPending}
+                confirmLoading={createDeck.isPending}
                 onCancel={hideModal}
             >
                 <Form
@@ -66,10 +56,10 @@ export const AddGroupModal = (props: AddGroupModalProps) => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Group Name"
+                        label="Deck Name"
                         name="title"
                         required
-                        initialValue="New Group"
+                        initialValue="New Deck"
                         rules={[yupSync]}
                     >
                         <Input size="large" />
@@ -86,8 +76,8 @@ const OpenButton = (props: OpenButtonProps) => {
     }
 
     return (
-        <Button type="primary" size="large" onClick={props.showModal} icon={<PlusCircleOutlined />}>
-            Create group
+        <Button type="primary" size="large" onClick={props.showModal} icon={<PlusIcon />}>
+            Create Deck
         </Button>
     );
 };

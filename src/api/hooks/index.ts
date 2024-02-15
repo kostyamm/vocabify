@@ -1,1 +1,1 @@
-export * from './useDictionary.ts'
+export * from './useDecks.ts'

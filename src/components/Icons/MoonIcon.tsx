@@ -1,5 +1,5 @@
-import Icon from '@ant-design/icons';
-import { CustomIconProps } from './types.ts';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const MoonSvg = () => {
     return (
@@ -12,5 +12,5 @@ const MoonSvg = () => {
 };
 
 export const MoonIcon = (props: CustomIconProps) => (
-    <Icon component={MoonSvg} {...props} />
+    <Icon children={<MoonSvg />} {...props} />
 );

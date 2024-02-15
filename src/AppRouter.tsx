@@ -1,7 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { BaseLayout, ErrorLayout } from './layouts';
 import { routeGroups } from './routes.tsx';
 import { ProtectedRoutes } from './layouts/ProtectedRoutes.tsx';
+import { BaseLayout, ErrorLayout } from './layouts';
 
 export const AppRouter = () => {
     return <RouterProvider router={router} />;

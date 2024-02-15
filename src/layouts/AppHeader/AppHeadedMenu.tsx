@@ -1,8 +1,8 @@
 import { useAuthContext } from '../../contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Menu, MenuProps, Space } from 'antd';
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { CSSProperties } from 'react';
+import { LogOutIcon, UserIcon } from '../../components/Icons';
 
 export const AppHeadedMenu = () => {
     const { isAuth } = useAuthContext();
@@ -35,16 +35,16 @@ const useMenuItems = () => {
     const navigate = useNavigate();
 
     const menuItems = [
-        { key: '/dictionary', label: 'Dictionary', onClick: () => navigate('/dictionary') },
+        { key: '/decks', label: 'Decks', onClick: () => navigate('/decks') },
         {
             key: '/account',
             label: 'Account',
-            icon: <UserOutlined />,
+            icon: <UserIcon />,
             children: [
                 {
                     key: '/account-sub-link',
                     label: 'Account',
-                    icon: <UserOutlined />,
+                    icon: <UserIcon />,
                     onClick: () => navigate('/account'),
                 },
                 {
@@ -55,7 +55,7 @@ const useMenuItems = () => {
                 {
                     key: 'logout',
                     label: 'Log out',
-                    icon: <LogoutOutlined />,
+                    icon: <LogOutIcon />,
                     onClick: logOut,
                 },
             ],

@@ -1,5 +1,5 @@
-import { CustomIconProps } from './types.ts';
-import Icon from '@ant-design/icons';
+import { Icon } from './Icon.tsx';
+import { CustomIconProps } from './Icon.types.tsx';
 
 const ListPlusSvg = () => {
     return (
@@ -16,5 +16,5 @@ const ListPlusSvg = () => {
 };
 
 export const ListPlusIcon = (props: CustomIconProps) => (
-    <Icon component={ListPlusSvg} {...props} />
+    <Icon children={<ListPlusSvg />} {...props} />
 );
