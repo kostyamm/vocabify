@@ -1,31 +1,24 @@
 import { theme, ThemeConfig } from 'antd';
 import { ThemeMode } from '../contexts';
 
-const BASE_PALETTE = {
-    colorPrimary: '#42b883',
-    colorPrimaryBg: 'rgba(66,184,131,0.6)',
-    colorBgContainer: '#141414',
-
-    colorBgDefault: '#161616',
-    colorBgPaper: '#181818',
-
-    colorBorder: 'rgba(84, 84, 84, .48)',
-
-    borderRadius: 12,
-};
-
 const lightTheme: ThemeConfig = {
     token: {
-        colorPrimary: BASE_PALETTE.colorPrimary,
-        colorPrimaryBg: BASE_PALETTE.colorPrimaryBg,
+        fontSize: 16,
 
-        colorBgContainer: '#fff',
+        controlHeight: 38,
+
+        borderRadius: 12,
+
+        colorPrimary: '#F27A54',
+        colorPrimaryBg: '#F27A54',
+
+        colorBgContainer: '#ffffff',
     },
     components: {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            headerBg: '#fff',
+            headerBg: '#ffffff',
         },
         Menu: {
             lineWidth: 0,
@@ -39,19 +32,32 @@ const lightTheme: ThemeConfig = {
 const darkTheme: ThemeConfig = {
     algorithm: theme.darkAlgorithm,
     token: {
-        borderRadius: 12,
-        colorPrimary: BASE_PALETTE.colorPrimary,
-        colorPrimaryBg: BASE_PALETTE.colorPrimaryBg,
-        // colorPrimaryText: BASE_PALETTE.colorPrimary,
+        fontSize: 16,
 
-        // colorBgLayout: 'white',
-        colorBgContainer: BASE_PALETTE.colorBgContainer
+        controlHeight: 38,
+
+        borderRadius: 12,
+
+        colorPrimary: '#F27A54',
+        colorPrimaryBg: '#F27A54',
+        colorSuccess: '#6FCF97',
+        colorSuccessBg: '#6FCF97',
+
+        colorBgBase: '#191919',
+        colorBgLayout: '#191919',
+
+        colorBgElevated: '#1C1C1C',
+        colorBgContainer: '#262626',
+
+        colorPrimaryBorder: '#333333',
+        colorBorderSecondary: '#333333',
+        colorBorder: '#4C4C4D',
     },
     components: {
         Layout: {
             headerHeight: 64,
             headerPadding: 0,
-            headerBg: BASE_PALETTE.colorBgContainer,
+            headerBg: '#1C1C1C'
         },
         Menu: {
             lineWidth: 0,

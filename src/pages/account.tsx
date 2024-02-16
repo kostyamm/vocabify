@@ -1,8 +1,8 @@
-import { ContentHeader } from '../components/ContentHeader';
+import { Container } from '../components/Container';
 
 export const Account = () => {
     return (
-        <ContentHeader title="Account"/>
+        <Container.Header title="Account"/>
     );
 };
 

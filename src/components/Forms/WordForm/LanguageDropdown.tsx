@@ -12,7 +12,7 @@ export const LanguageDropdown = () => {
                 <Space.Compact>
                     <LanguageSelect title="Word" value={wordValue} onChange={setWordValue} />
                     <Flex vertical gap={8} justify="flex-end">
-                        <Button size="large" icon={<ArrowRightLeftIcon />} />
+                        <Button icon={<ArrowRightLeftIcon />} />
                     </Flex>
                     <LanguageSelect title="Translation" value={translationValue} onChange={setTranslationValue} />
                 </Space.Compact>
@@ -57,7 +57,6 @@ const LanguageSelect = ({ value, onChange, title }: {
         <Flex vertical gap={8}>
             <Typography.Text strong>{title}</Typography.Text>
             <Select
-                size="large"
                 style={{ minWidth: 145 }}
                 value={value}
                 onChange={onChange}

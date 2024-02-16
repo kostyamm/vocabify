@@ -1,7 +1,7 @@
-import { ContentHeader } from '../../components/ContentHeader';
+import { Container } from '../../components/Container';
 
 export const Study = () => {
     return (
-        <ContentHeader title={'Study'} />
+        <Container.Header title={'Study'} />
     );
 };

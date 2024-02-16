@@ -27,7 +27,7 @@ const WordDropdownMenu = () => {
                     <Typography.Text strong>{'Привет'}</Typography.Text>
                 </List.Item>
                 <List.Item actions={[<IconButton shape="default" icon={<ListPlusIcon />} />]}>
-                    <Input size="large" placeholder="Your translation" style={{ flex: 1 }} />
+                    <Input placeholder="Your translation" style={{ flex: 1 }} />
                 </List.Item>
             </List>
         </Card>

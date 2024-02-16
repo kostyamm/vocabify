@@ -10,7 +10,7 @@ export const AppHeader = () => {
 
     return (
         <Layout.Header style={headerStyle}>
-            <Container large>
+            <Container>
                 <Flex align="center" justify="space-between">
                     <AppLogo />
 

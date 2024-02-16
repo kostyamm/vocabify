@@ -76,7 +76,7 @@ const OpenButton = (props: OpenButtonProps) => {
     }
 
     return (
-        <Button type="primary" size="large" onClick={props.showModal} icon={<PlusIcon />}>
+        <Button type="primary" onClick={props.showModal} icon={<PlusIcon />}>
             Create Deck
         </Button>
     );

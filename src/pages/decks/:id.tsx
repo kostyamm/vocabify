@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { Fragment, useState } from 'react';
-import { ContentHeader } from '../../components/ContentHeader';
 import { WordForm } from '../../components/Forms/WordForm';
 import { StudyButton } from '../../components/Buttons';
 import { Tabs } from 'antd';
 import { CardList } from '../../components/Lists/CardList.tsx';
 import { useGetDeckById } from '../../api/hooks';
+import { Container } from '../../components/Container';
 
 const mockCards = [
     {
@@ -14,7 +14,7 @@ const mockCards = [
         translation: 'Hello',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: false
+        studied: false,
     },
     {
         id: 2,
@@ -22,7 +22,7 @@ const mockCards = [
         translation: 'Pagination',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: false
+        studied: false,
     },
     {
         id: 3,
@@ -30,7 +30,7 @@ const mockCards = [
         translation: 'Laptop',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: false
+        studied: false,
     },
     {
         id: 4,
@@ -38,7 +38,7 @@ const mockCards = [
         translation: 'Internet',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: false
+        studied: false,
     },
     {
         id: 5,
@@ -46,7 +46,7 @@ const mockCards = [
         translation: 'Window',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: true
+        studied: true,
     },
     {
         id: 6,
@@ -54,44 +54,46 @@ const mockCards = [
         translation: 'Car',
         originalLanguage: 'RU',
         targetLanguage: 'EN',
-        studied: true
+        studied: true,
     },
 ];
 
 export const DeckId = () => {
     const { id: deckId } = useParams();
-    const { data, isLoading } = useGetDeckById(deckId!)
+    const { data, isLoading } = useGetDeckById(deckId!);
 
-    const [activeTab, setActiveTab] = useState('study')
+    const [activeTab, setActiveTab] = useState('study');
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <div>Loading...</div>;
 
     return (
         <Fragment>
-            <ContentHeader
+            <Container.Header
                 title={`${data.title}`}
-                action={<StudyButton size="large" type="primary" itemId={deckId!} />}
+                action={<StudyButton type="primary" itemId={deckId!} />}
             />
 
-            <WordForm />
+            <Container.Content>
+                <WordForm />
 
-            <Tabs
-                activeKey={activeTab}
-                onChange={setActiveTab}
-                animated
-                items={[
-                    {
-                        label: 'On the study',
-                        key: 'study',
-                        children: <CardList cards={mockCards.filter(({studied}) => !studied)} />,
-                    },
-                    {
-                        label: 'Studied',
-                        key: 'studied',
-                        children: <CardList cards={mockCards.filter(({studied}) => studied)} />,
-                    },
-                ]}
-            />
+                <Tabs
+                    activeKey={activeTab}
+                    onChange={setActiveTab}
+                    animated
+                    items={[
+                        {
+                            label: 'On the study',
+                            key: 'study',
+                            children: <CardList cards={mockCards.filter(({ studied }) => !studied)} />,
+                        },
+                        {
+                            label: 'Studied',
+                            key: 'studied',
+                            children: <CardList cards={mockCards.filter(({ studied }) => studied)} />,
+                        },
+                    ]}
+                />
+            </Container.Content>
         </Fragment>
     );
 };

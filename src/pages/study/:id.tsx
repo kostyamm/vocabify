@@ -1,10 +1,10 @@
-import { ContentHeader } from '../../components/ContentHeader';
 import { useParams } from 'react-router-dom';
+import { Container } from '../../components/Container';
 
 export const StudyId = () => {
     const { id: deckId } = useParams();
 
     return (
-        <ContentHeader title={`Study ${deckId}`} />
+        <Container.Header title={`Study ${deckId}`} />
     );
 };

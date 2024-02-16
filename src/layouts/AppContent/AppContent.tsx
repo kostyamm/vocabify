@@ -2,10 +2,8 @@ import { Layout, theme } from 'antd';
 import { Container } from '../../components/Container';
 import { Outlet } from 'react-router-dom';
 
-const { useToken } = theme;
-
 export const AppContent = () => {
-    const { token } = useToken();
+    const { token } = theme.useToken();
 
     const contentStyle = {
         minHeight: `calc(100dvh - ${token.Layout?.headerHeight}px)`,
