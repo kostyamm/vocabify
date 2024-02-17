@@ -1,9 +1,8 @@
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { CardProps } from 'antd';
 
 export type ContainerProps = {
     children: ReactNode;
-    style?: CSSProperties;
     large?: boolean;
 }
 

@@ -1,16 +1,12 @@
-import { Button, Checkbox, Col, Flex, Input, List, Row } from 'antd';
+import { Button, Checkbox, Col, Flex, Grid, Input, List, Row } from 'antd';
 import { useMemo, useState } from 'react';
-import { SearchIcon } from '../Icons';
-
-type Card = {
-    id: number,
-    frontSide: string,
-    backSide: string,
-    studied: boolean
-}
+import { DeleteIcon, EditIcon, SearchIcon } from '../Icons';
+import { Card } from '../../api/cards.ts';
+import { useDeleteCards } from '../../api/hooks/useCards.ts';
 
 type CardListProps = {
-    cards: Array<Card>
+    cards?: Array<Card>;
+    loading?: boolean
 }
 
 type CardListFiltersProps = {
@@ -18,12 +14,13 @@ type CardListFiltersProps = {
     isAllChecked: boolean;
 }
 
-export const CardList = ({ cards }: CardListProps) => {
+export const CardList = ({ cards = [], loading }: CardListProps) => {
     const [checkedList, setCheckedList] = useState<Array<number>>([]);
-    const cardsIds = useMemo(() => cards.map(({ id }) => id),
-        [cards],
-    );
-    const isAllChecked = cardsIds.length == checkedList.length;
+
+    const getCardsIds = () => cards?.map(({ id }) => id);
+    const cardsIds = useMemo(getCardsIds, [cards]);
+
+    const isAllChecked = !!cardsIds.length && cardsIds.length === checkedList.length;
 
     const onChange = (list: Array<number>) => {
         setCheckedList(list);
@@ -41,16 +38,41 @@ export const CardList = ({ cards }: CardListProps) => {
                 <List
                     itemLayout="horizontal"
                     dataSource={cards}
-                    renderItem={renderItem}
+                    loading={loading}
+                    renderItem={(item) => <HoveredCardItem item={item}/>}
                 />
             </Checkbox.Group>
         </Flex>
     );
 };
 
-const renderItem = (item: Card) => {
+const HoveredCardItem = ({ item }: { item: Card }) => {
+    const [showActions, setShowActions] = useState(false);
+    const deleteCards = useDeleteCards(item.deck_id.toString())
+    const breakpoint = Grid.useBreakpoint();
+    const isMobile = !breakpoint.md
+
+    const onDeleteCard= async () => {
+        await deleteCards.mutateAsync(item.id);
+    };
+
+    const getActions = () => {
+        if (!showActions && !isMobile && !deleteCards.isPending) {
+            return [];
+        }
+
+        return [
+            <Button icon={<EditIcon />} />,
+            <Button loading={deleteCards.isPending} onClick={onDeleteCard} danger icon={<DeleteIcon />} />
+        ];
+    };
+
     return (
-        <List.Item>
+        <List.Item
+            actions={getActions()}
+            onMouseEnter={() => setShowActions(true)}
+            onMouseLeave={() => setShowActions(false)}
+        >
             <Row gutter={16}>
                 <Col>
                     <Checkbox value={item.id} />
@@ -81,8 +103,8 @@ const CardListFilters = ({ onCheckAll, isAllChecked }: CardListFiltersProps) => 
                 </Button>
             </div>
         </Flex>
-    )
-}
+    );
+};
 
 const checkboxStyles = {
     width: '100%',

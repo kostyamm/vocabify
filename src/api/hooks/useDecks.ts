@@ -83,5 +83,5 @@ export const useDeleteDeck = () => {
 };
 
 export const useDecksObserver = () => {
-    return useDataObserver<Deck>(KEY, getDecks)
+    return useDataObserver<Deck>([KEY], getDecks)
 }

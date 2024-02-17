@@ -8,7 +8,8 @@ export const ContainerHeader = ({ title, actions }: ContainerHeaderProps) => {
     return (
         <Flex
             align="center"
-            justify={isMobile ? 'center' : 'space-between'}
+            justify="space-between"
+            vertical={isMobile}
             wrap="wrap"
             gap={16}
             style={{ marginBottom: 32 }}

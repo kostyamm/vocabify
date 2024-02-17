@@ -39,6 +39,12 @@ export const DeckModal = ({ title, onConfirm, confirmLoading, initialValues, ope
     };
 
     useEffect(() => {
+        if (open && !confirmLoading) {
+            setOpen(false);
+        }
+    }, [confirmLoading]);
+
+    useEffect(() => {
         if (!initialValues) {
             return;
         }

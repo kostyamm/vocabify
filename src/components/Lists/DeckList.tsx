@@ -13,15 +13,16 @@ export const DeckList = ({ decksData }: DeckListProps) => {
     return (
         <List
             dataSource={decksData}
-            renderItem={(item) => <HoveredListItem item={item} />}
+            renderItem={(item) => <HoveredDeckItem item={item} />}
         />
     );
 };
 
-const HoveredListItem = ({ item }: { item: Deck }) => {
+const HoveredDeckItem = ({ item }: { item: Deck }) => {
     const navigate = useNavigate();
+    const [showActions, setShowActions] = useState(false);
     const breakpoint = Grid.useBreakpoint();
-    const [showAction, setShowAction] = useState(false);
+    const isMobile = !breakpoint.md
 
     const updateDeck = useUpdateDeck();
     const deleteDeck = useDeleteDeck();
@@ -43,13 +44,13 @@ const HoveredListItem = ({ item }: { item: Deck }) => {
     };
 
     const getActions = () => {
-        if (!showAction && breakpoint.md) {
+        if (!showActions && !isMobile) {
             return [];
         }
 
         return [
-            <Button onClick={onUpdateDeck} size="large" type="text" icon={<EditIcon />} />,
-            <Button onClick={onDeleteDeck} size="large" danger type="text" icon={<DeleteIcon />} />,
+            <Button onClick={onUpdateDeck} icon={<EditIcon />} />,
+            <Button onClick={onDeleteDeck} danger icon={<DeleteIcon />} />,
         ];
     };
 
@@ -57,8 +58,8 @@ const HoveredListItem = ({ item }: { item: Deck }) => {
         <List.Item
             extra={<ChevronRightIcon />}
             actions={getActions()}
-            onMouseEnter={() => setShowAction(true)}
-            onMouseLeave={() => setShowAction(false)}
+            onMouseEnter={() => setShowActions(true)}
+            onMouseLeave={() => setShowActions(false)}
             onClick={() => navigate(`/decks/${item.id}`)}
             style={listStyle}
         >

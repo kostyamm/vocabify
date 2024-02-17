@@ -13,7 +13,8 @@ export const enableMocking = async () => {
         onUnhandledRequest(req: Request, print: any) {
             const ignoredPathnames = [
                 'chrome-extension',
-                'node_modules'
+                'node_modules',
+                'logo.svg',
             ];
             if (ignoredPathnames.some((pathname) => req.url === pathname || req.url.includes(pathname))) {
                 return;

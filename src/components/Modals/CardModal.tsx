@@ -36,8 +36,13 @@ export const CardModal = ({ title, onConfirm, confirmLoading, initialValues, ope
         }
 
         form.submit();
-        setOpen(false);
     };
+
+    useEffect(() => {
+        if (open && !confirmLoading) {
+            setOpen(false);
+        }
+    }, [confirmLoading]);
 
     useEffect(() => {
         if (!initialValues) {
