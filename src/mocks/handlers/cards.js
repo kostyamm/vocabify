@@ -86,8 +86,6 @@ export const cards = [
     http.delete('/cards/:id', async ({ params }) => {
         cardsData.delete(params.id)
 
-        await delay(1000)
-
         return HttpResponse.json(params.id, { status: 201 })
     }),
 ]

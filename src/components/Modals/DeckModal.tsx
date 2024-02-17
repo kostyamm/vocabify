@@ -1,8 +1,7 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Button, ButtonProps, Form, Input, Modal } from 'antd';
+import { useEffect } from 'react';
+import { Form, Input, Modal } from 'antd';
 import { useYupValidator } from '../../hooks/useYupValidator.ts';
 import { InferType, object, string } from 'yup';
-import { PlusIcon } from '../Icons';
 
 const deckFromSchema = object().shape({
     title: string().required(),
@@ -11,21 +10,16 @@ const deckFromSchema = object().shape({
 export type DeckFromSchema = InferType<typeof deckFromSchema>
 
 type DeckModalProps = {
+    open: boolean;
+    hideModal: () => void;
     title: string;
     onConfirm: (form: DeckFromSchema) => void;
-    confirmLoading?: boolean;
     initialValues?: DeckFromSchema;
-    openButtonProps?: Omit<ButtonProps, 'onClick'>;
 }
 
-export const DeckModal = ({ title, onConfirm, confirmLoading, initialValues, openButtonProps }: DeckModalProps) => {
-    const [open, setOpen] = useState(false);
-
+export const DeckModal = ({ open, hideModal, title, onConfirm, initialValues }: DeckModalProps) => {
     const [form] = Form.useForm<DeckFromSchema>();
     const { yupSync, formValidate } = useYupValidator(deckFromSchema, form);
-
-    const showModal = () => setOpen(true);
-    const hideModal = () => setOpen(false);
 
     const handleOk = async () => {
         const isValid = await formValidate();
@@ -35,55 +29,42 @@ export const DeckModal = ({ title, onConfirm, confirmLoading, initialValues, ope
         }
 
         form.submit();
-        setOpen(false);
+        hideModal();
     };
 
     useEffect(() => {
-        if (open && !confirmLoading) {
-            setOpen(false);
-        }
-    }, [confirmLoading]);
-
-    useEffect(() => {
-        if (!initialValues) {
+        if (!initialValues || !open) {
             return;
         }
 
         form.setFieldsValue(initialValues);
-    }, [initialValues]);
+    }, [initialValues, open]);
 
     return (
-        <Fragment>
-            <Button type="primary" onClick={showModal} icon={<PlusIcon />} {...openButtonProps}>
-                Create Deck
-            </Button>
-
-            <Modal
-                title={title}
-                open={open}
-                okText="Create"
-                onOk={handleOk}
-                confirmLoading={confirmLoading}
-                onCancel={hideModal}
-                afterClose={() => form.resetFields()}
-                styles={{ header: { marginBottom: 24 } }}
+        <Modal
+            title={title}
+            open={open}
+            okText="Confirm"
+            onOk={handleOk}
+            onCancel={hideModal}
+            afterClose={() => form.resetFields()}
+            styles={{ header: { marginBottom: 24 } }}
+        >
+            <Form
+                form={form}
+                onFinish={onConfirm}
+                layout="vertical"
+                autoComplete="off"
             >
-                <Form
-                    form={form}
-                    onFinish={onConfirm}
-                    layout="vertical"
-                    autoComplete="off"
+                <Form.Item
+                    label="Deck Name"
+                    name="title"
+                    required
+                    rules={[yupSync]}
                 >
-                    <Form.Item
-                        label="Deck Name"
-                        name="title"
-                        required
-                        rules={[yupSync]}
-                    >
-                        <Input />
-                    </Form.Item>
-                </Form>
-            </Modal>
-        </Fragment>
+                    <Input />
+                </Form.Item>
+            </Form>
+        </Modal>
     );
 };

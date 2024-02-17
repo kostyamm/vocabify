@@ -36,7 +36,7 @@ export const createDeck = async (data: Omit<Deck, 'id'>) => {
 
 export const updateDeck = async (data: Deck) => {
     try {
-        const { data: responseData } = await axiosApiInstance.put('/decks', data)
+        const { data: responseData } = await axiosApiInstance.put(`/decks/${data.id}`, data)
         return responseData
     } catch (e) {
         console.error(e)

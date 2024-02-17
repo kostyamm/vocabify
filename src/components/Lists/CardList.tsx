@@ -1,8 +1,10 @@
 import { Button, Checkbox, Col, Flex, Grid, Input, List, Row } from 'antd';
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { DeleteIcon, EditIcon, SearchIcon } from '../Icons';
-import { Card } from '../../api/cards.ts';
-import { useDeleteCards } from '../../api/hooks/useCards.ts';
+import { Card } from '../../api';
+import { useDeleteCards, useUpdateCard } from '../../api/hooks/useCards.ts';
+import { CardFromSchema, CardModal } from '../Modals';
+import { useBoolean } from '../../hooks/useBoolean.ts';
 
 type CardListProps = {
     cards?: Array<Card>;
@@ -39,7 +41,7 @@ export const CardList = ({ cards = [], loading }: CardListProps) => {
                     itemLayout="horizontal"
                     dataSource={cards}
                     loading={loading}
-                    renderItem={(item) => <HoveredCardItem item={item}/>}
+                    renderItem={(item) => <HoveredCardItem item={item} />}
                 />
             </Checkbox.Group>
         </Flex>
@@ -48,11 +50,11 @@ export const CardList = ({ cards = [], loading }: CardListProps) => {
 
 const HoveredCardItem = ({ item }: { item: Card }) => {
     const [showActions, setShowActions] = useState(false);
-    const deleteCards = useDeleteCards(item.deck_id.toString())
+    const deleteCards = useDeleteCards(item.deck_id.toString());
     const breakpoint = Grid.useBreakpoint();
-    const isMobile = !breakpoint.md
+    const isMobile = !breakpoint.md;
 
-    const onDeleteCard= async () => {
+    const onDeleteCard = async () => {
         await deleteCards.mutateAsync(item.id);
     };
 
@@ -62,8 +64,8 @@ const HoveredCardItem = ({ item }: { item: Card }) => {
         }
 
         return [
-            <Button icon={<EditIcon />} />,
-            <Button loading={deleteCards.isPending} onClick={onDeleteCard} danger icon={<DeleteIcon />} />
+            <UpdateCardAction item={item} />,
+            <Button loading={deleteCards.isPending} onClick={onDeleteCard} danger icon={<DeleteIcon />} />,
         ];
     };
 
@@ -79,14 +81,14 @@ const HoveredCardItem = ({ item }: { item: Card }) => {
                 </Col>
                 <Col>
                     <List.Item.Meta
-                        title={item.frontSide}
-                        description={item.backSide}
+                        title={clearHyphens(item.frontSide)}
+                        description={clearHyphens(item.backSide)}
                     />
                 </Col>
             </Row>
         </List.Item>
-    )
-}
+    );
+};
 
 const CardListFilters = ({ onCheckAll, isAllChecked }: CardListFiltersProps) => {
     return (
@@ -105,6 +107,39 @@ const CardListFilters = ({ onCheckAll, isAllChecked }: CardListFiltersProps) => 
         </Flex>
     );
 };
+
+const UpdateCardAction = ({ item }: { item: Card }) => {
+    const { value: open, setTrue: showModal, setFalse: hideModal } = useBoolean();
+    const updateCard = useUpdateCard(item.deck_id.toString());
+
+    const onUpdateCard = async (data: CardFromSchema) => {
+        await updateCard.mutateAsync({ ...item, ...data });
+    };
+
+    return (
+        <Fragment>
+            <Button loading={updateCard.isPending} onClick={showModal} icon={<EditIcon />} />
+            <CardModal
+                title="Update Card"
+                open={open}
+                hideModal={hideModal}
+                onConfirm={onUpdateCard}
+                initialValues={item}
+            />
+        </Fragment>
+    );
+};
+
+const clearHyphens = (text: string) => {
+    const hasHyphens = text.includes('\n')
+
+    if (hasHyphens) {
+        const [firstLine, _] = text.split('\n')
+        return `${firstLine}...`
+    }
+
+    return text
+}
 
 const checkboxStyles = {
     width: '100%',

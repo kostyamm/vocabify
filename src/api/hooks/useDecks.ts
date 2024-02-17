@@ -43,11 +43,11 @@ export const useCreateDeck = () => {
 export const useUpdateDeck = () => {
     const queryClient = useQueryClient();
 
-    const onSuccess = (newDeck: Deck) => {
+    const onSuccess = (updatedDeck: Deck) => {
         const updater = (prevDecks: Array<Deck> | undefined) => {
             return prevDecks?.map(deck => {
-                if (deck.id === newDeck.id) {
-                    deck.title = newDeck.title;
+                if (deck.id === updatedDeck.id) {
+                    return updatedDeck
                 }
 
                 return deck;

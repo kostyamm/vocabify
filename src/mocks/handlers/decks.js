@@ -1,4 +1,4 @@
-import { http, HttpResponse} from 'msw'
+import { delay, http, HttpResponse } from 'msw'
 
 const mockDecksData = [
     {
@@ -46,12 +46,14 @@ export const decks = [
 
         decksData.set(newDeck.id, newDeck)
 
+        await delay(1000)
+
         return HttpResponse.json(newDeck, { status: 201 })
     }),
-    http.put('/decks', async ({ request }) => {
+    http.put('/decks/:id', async ({ request, params }) => {
         const updatedDeck = await request.json()
 
-        decksData.set(updatedDeck.id, updatedDeck)
+        decksData.set(params.id, updatedDeck)
 
         return HttpResponse.json(updatedDeck, { status: 201 })
     }),

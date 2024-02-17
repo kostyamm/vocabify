@@ -1,8 +1,7 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Button, ButtonProps, Form, Input, Modal } from 'antd';
+import { useEffect } from 'react';
+import { Form, Input, Modal } from 'antd';
 import { useYupValidator } from '../../hooks/useYupValidator.ts';
 import { InferType, object, string } from 'yup';
-import { PlusIcon } from '../Icons';
 
 const cardFromSchema = object().shape({
     frontSide: string().required(),
@@ -12,21 +11,16 @@ const cardFromSchema = object().shape({
 export type CardFromSchema = InferType<typeof cardFromSchema>
 
 type CardModalProps = {
+    open: boolean;
+    hideModal: () => void;
     title: string;
     onConfirm: (form: CardFromSchema) => void;
-    confirmLoading?: boolean;
     initialValues?: CardFromSchema;
-    openButtonProps?: Omit<ButtonProps, 'onClick'>;
 }
 
-export const CardModal = ({ title, onConfirm, confirmLoading, initialValues, openButtonProps }: CardModalProps) => {
-    const [open, setOpen] = useState(false);
-
+export const CardModal = ({ open, hideModal, title, onConfirm, initialValues }: CardModalProps) => {
     const [form] = Form.useForm<CardFromSchema>();
     const { yupSync, formValidate } = useYupValidator(cardFromSchema, form);
-
-    const showModal = () => setOpen(true);
-    const hideModal = () => setOpen(false);
 
     const handleOk = async () => {
         const isValid = await formValidate();
@@ -36,62 +30,50 @@ export const CardModal = ({ title, onConfirm, confirmLoading, initialValues, ope
         }
 
         form.submit();
+        hideModal();
     };
 
     useEffect(() => {
-        if (open && !confirmLoading) {
-            setOpen(false);
-        }
-    }, [confirmLoading]);
-
-    useEffect(() => {
-        if (!initialValues) {
+        if (!initialValues || !open) {
             return;
         }
 
         form.setFieldsValue(initialValues);
-    }, [initialValues]);
+    }, [initialValues, open]);
 
     return (
-        <Fragment>
-            <Button type="primary" onClick={showModal} icon={<PlusIcon />} {...openButtonProps}>
-                Create Card
-            </Button>
-
-            <Modal
-                title={title}
-                open={open}
-                okText="Create"
-                onOk={handleOk}
-                confirmLoading={confirmLoading}
-                onCancel={hideModal}
-                afterClose={() => form.resetFields()}
-                styles={{ header: { marginBottom: 24 } }}
+        <Modal
+            title={title}
+            open={open}
+            okText="Confirm"
+            onOk={handleOk}
+            onCancel={hideModal}
+            afterClose={() => form.resetFields()}
+            styles={{ header: { marginBottom: 24 } }}
+        >
+            <Form
+                form={form}
+                onFinish={onConfirm}
+                layout="vertical"
+                autoComplete="off"
             >
-                <Form
-                    form={form}
-                    onFinish={onConfirm}
-                    layout="vertical"
-                    autoComplete="off"
+                <Form.Item
+                    label="Front side"
+                    name="frontSide"
+                    required
+                    rules={[yupSync]}
                 >
-                    <Form.Item
-                        label="Front side"
-                        name="frontSide"
-                        required
-                        rules={[yupSync]}
-                    >
-                        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} placeholder="Cześć" />
-                    </Form.Item>
-                    <Form.Item
-                        label="Back side"
-                        name="backSide"
-                        required
-                        rules={[yupSync]}
-                    >
-                        <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} placeholder="Hi" />
-                    </Form.Item>
-                </Form>
-            </Modal>
-        </Fragment>
+                    <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} placeholder="Cześć" />
+                </Form.Item>
+                <Form.Item
+                    label="Back side"
+                    name="backSide"
+                    required
+                    rules={[yupSync]}
+                >
+                    <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }} placeholder="Hi" />
+                </Form.Item>
+            </Form>
+        </Modal>
     );
 };

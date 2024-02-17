@@ -33,6 +33,15 @@ export const createCard = async (data: Omit<Card, 'id'>) => {
     }
 };
 
+export const updateCard = async (data: Card) => {
+    try {
+        const { data: responseData } = await axiosApiInstance.put(`/cards/${data.id}`, data)
+        return responseData
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export const deleteCard = async (id: number | string) => {
     try {
         const { data } = await axiosApiInstance.delete(`/cards/${id}`);

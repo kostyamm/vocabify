@@ -1,5 +1,5 @@
 import { useDataObserver } from './useDataObserver.ts';
-import { Card, createCard, deleteCard, getCards } from '../cards.ts';
+import { Card, createCard, deleteCard, getCards, updateCard } from '../cards.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const KEY = 'cards';
@@ -29,6 +29,31 @@ export const useCreateCard = (deckId: string) => {
         onSuccess,
     });
 };
+
+export const useUpdateCard = (deckId: string) => {
+    const queryClient = useQueryClient();
+
+    const onSuccess = (updatedCard: Card) => {
+        const updater = (prevCards: Array<Card> | undefined) => {
+            return prevCards?.map(card => {
+                if (card.id === updatedCard.id) {
+                    return updatedCard
+                }
+
+                return card;
+            });
+        }
+
+        queryClient.setQueryData([KEY, deckId], updater);
+    };
+
+    return useMutation({
+        mutationKey: [KEY, deckId],
+        mutationFn: updateCard,
+        onSuccess,
+    });
+};
+
 
 export const useDeleteCards = (deckId: string) => {
     const queryClient = useQueryClient();

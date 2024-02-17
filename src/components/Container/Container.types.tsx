@@ -13,7 +13,7 @@ export type ContainerContentProps = Omit<CardProps, 'style' | 'bordered'> & {
 type HeaderActions = ReactNode | Array<ReactNode>
 
 export type ContainerHeaderProps = {
-    title: string,
+    title: string | ReactNode,
     actions?: HeaderActions,
 }
 
