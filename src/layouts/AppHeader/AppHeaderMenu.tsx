@@ -4,7 +4,7 @@ import { Button, Menu, MenuProps, Space } from 'antd';
 import { CSSProperties } from 'react';
 import { LogOutIcon, UserIcon } from '../../components/Icons';
 
-export const AppHeadedMenu = () => {
+export const AppHeaderMenu = () => {
     const { isAuth } = useAuthContext();
     const { menuItems, activeKeys } = useMenuItems();
     const navigate = useNavigate();

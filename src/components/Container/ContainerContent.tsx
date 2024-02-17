@@ -5,12 +5,20 @@ export const ContainerContent = ({ children, ...cardProps }: ContainerContentPro
     const { token } = theme.useToken();
     const breakpoint = Grid.useBreakpoint();
 
+    const isMobile = !breakpoint.md;
+
     const containerStyle = {
         backgroundColor: token.colorBgContainer,
         borderRadius: token.borderRadius,
-
-        margin: !breakpoint.md ? '-16px' : 0,
+        margin: isMobile ? '0 -16px' : 0,
     };
 
-    return <Card size="small" {...cardProps} bordered={false} style={containerStyle}>{children}</Card>;
+    return <Card
+        size={isMobile ? 'small' : 'default'}
+        bordered={false}
+        style={containerStyle}
+        {...cardProps}
+    >
+        {children}
+    </Card>;
 };

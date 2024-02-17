@@ -20,7 +20,7 @@ export const DeckList = ({ decksData }: DeckListProps) => {
 
 const HoveredListItem = ({ item }: { item: Deck }) => {
     const navigate = useNavigate();
-    const breakpoint = Grid.useBreakpoint()
+    const breakpoint = Grid.useBreakpoint();
     const [showAction, setShowAction] = useState(false);
 
     const updateDeck = useUpdateDeck();
@@ -38,24 +38,24 @@ const HoveredListItem = ({ item }: { item: Deck }) => {
     };
 
     const onDeleteDeck: MouseEventHandler = async (event) => {
-        event.stopPropagation()
+        event.stopPropagation();
         await deleteDeck.mutateAsync(item.id);
     };
 
     const getActions = () => {
         if (!showAction && breakpoint.md) {
-            return [<ChevronRightIcon />];
+            return [];
         }
 
         return [
             <Button onClick={onUpdateDeck} size="large" type="text" icon={<EditIcon />} />,
             <Button onClick={onDeleteDeck} size="large" danger type="text" icon={<DeleteIcon />} />,
-            <ChevronRightIcon />,
         ];
     };
 
     return (
         <List.Item
+            extra={<ChevronRightIcon />}
             actions={getActions()}
             onMouseEnter={() => setShowAction(true)}
             onMouseLeave={() => setShowAction(false)}
@@ -73,4 +73,4 @@ const HoveredListItem = ({ item }: { item: Deck }) => {
 
 const listStyle: CSSProperties = {
     cursor: 'pointer',
-}
+};

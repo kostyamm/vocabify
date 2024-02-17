@@ -4,44 +4,30 @@ const mockDecksData = [
     {
         id: 1,
         title: 'English',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
     },
     {
         id: 2,
         title: 'Polish',
-        originalLanguage: 'RU',
-        targetLanguage: 'PL',
     },
     {
         id: 3,
         title: 'Belarusian',
-        originalLanguage: 'RU',
-        targetLanguage: 'BE',
     },
     {
         id: 4,
         title: 'Sport',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
     },
     {
         id: 5,
         title: 'Family (eng)',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
     },
     {
         id: 6,
         title: 'Home',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
     },
     {
         id: 7,
         title: 'Travel',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
     },
 ];
 
@@ -57,8 +43,6 @@ export const decks = [
     http.post('/decks', async ({ request }) => {
         const newDeck = await request.json()
         newDeck.id = Date.now()
-        newDeck.originalLanguage = 'RU'
-        newDeck.targetLanguage = 'EN'
 
         decksData.set(newDeck.id, newDeck)
 

@@ -1,7 +1,7 @@
-import { Typography } from 'antd';
+import { Container } from '../components/Container';
 
 export const Home = () => {
     return (
-        <Typography.Title>Home</Typography.Title>
+        <Container.Header title="Home"/>
     );
 };

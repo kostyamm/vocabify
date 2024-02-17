@@ -11,6 +11,7 @@ const EditSvg = () => {
         </svg>
     );
 };
+
 export const EditIcon = (props: CustomIconProps) => (
     <Icon children={<EditSvg />} {...props} />
 );

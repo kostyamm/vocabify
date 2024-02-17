@@ -3,7 +3,7 @@ import { Container } from '../../components/Container';
 import { CSSProperties } from 'react';
 import { AppLogo } from '../../components/AppLogo';
 import { ThemeDropdown } from './ThemeDropdown.tsx';
-import { AppHeadedMenu } from './AppHeadedMenu.tsx';
+import { AppHeaderMenu } from './AppHeaderMenu.tsx';
 
 export const AppHeader = () => {
     const { headerStyle, dividerStyle } = useHeaderStyles();
@@ -15,7 +15,7 @@ export const AppHeader = () => {
                     <AppLogo />
 
                     <Flex align="center" justify="flex-end" style={{ flex: 1 }}>
-                        <AppHeadedMenu />
+                        <AppHeaderMenu />
                         <Divider type="vertical" style={dividerStyle} />
                         <ThemeDropdown />
                     </Flex>

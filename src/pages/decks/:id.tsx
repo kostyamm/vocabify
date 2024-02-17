@@ -1,59 +1,47 @@
-import { useParams } from 'react-router-dom';
-import { Fragment, useState } from 'react';
-import { WordForm } from '../../components/Forms/WordForm';
-import { StudyButton } from '../../components/Buttons';
-import { Tabs } from 'antd';
+import { Fragment } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CardList } from '../../components/Lists/CardList.tsx';
 import { useGetDeckById } from '../../api/hooks';
 import { Container } from '../../components/Container';
+import { CardFromSchema, CardModal } from '../../components/Modals';
+import { Button } from 'antd';
+import { GraduationIcon } from '../../components/Icons';
 
 const mockCards = [
     {
         id: 1,
-        word: 'Привет',
-        translation: 'Hello',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
+        frontSide: 'Привет',
+        backSide: 'Hello',
         studied: false,
     },
     {
         id: 2,
-        word: 'Пагинация',
-        translation: 'Pagination',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
+        frontSide: 'Пагинация',
+        backSide: 'Pagination',
         studied: false,
     },
     {
         id: 3,
-        word: 'Ноутбук',
-        translation: 'Laptop',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
+        frontSide: 'Ноутбук',
+        backSide: 'Laptop',
         studied: false,
     },
     {
         id: 4,
-        word: 'Интернет',
-        translation: 'Internet',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
+        frontSide: 'Интернет',
+        backSide: 'Internet',
         studied: false,
     },
     {
         id: 5,
-        word: 'Окно',
-        translation: 'Window',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
+        frontSide: 'Окно',
+        backSide: 'Window',
         studied: true,
     },
     {
         id: 6,
-        word: 'Машина',
-        translation: 'Car',
-        originalLanguage: 'RU',
-        targetLanguage: 'EN',
+        frontSide: 'Машина',
+        backSide: 'Car',
         studied: true,
     },
 ];
@@ -62,38 +50,39 @@ export const DeckId = () => {
     const { id: deckId } = useParams();
     const { data, isLoading } = useGetDeckById(deckId!);
 
-    const [activeTab, setActiveTab] = useState('study');
-
     if (isLoading) return <div>Loading...</div>;
+
+    const onCreateCard = (form: CardFromSchema) => {
+        console.log(form);
+    }
 
     return (
         <Fragment>
             <Container.Header
                 title={`${data.title}`}
-                action={<StudyButton type="primary" itemId={deckId!} />}
+                actions={[
+                    <StudyButton itemId={deckId!} />,
+                    <CardModal title="Create Card" onConfirm={onCreateCard} confirmLoading={false}/>
+                ]}
             />
 
             <Container.Content>
-                <WordForm />
-
-                <Tabs
-                    activeKey={activeTab}
-                    onChange={setActiveTab}
-                    animated
-                    items={[
-                        {
-                            label: 'On the study',
-                            key: 'study',
-                            children: <CardList cards={mockCards.filter(({ studied }) => !studied)} />,
-                        },
-                        {
-                            label: 'Studied',
-                            key: 'studied',
-                            children: <CardList cards={mockCards.filter(({ studied }) => studied)} />,
-                        },
-                    ]}
-                />
+                <CardList cards={mockCards} />
             </Container.Content>
         </Fragment>
+    );
+};
+
+const StudyButton = ({ itemId }: { itemId: string | number }) => {
+    const navigate = useNavigate();
+
+    return (
+        <Button
+            type="primary"
+            icon={<GraduationIcon key="study" />}
+            onClick={() => {navigate(`/study/${itemId}`)}}
+        >
+            Study
+        </Button>
     );
 };

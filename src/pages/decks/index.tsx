@@ -1,17 +1,27 @@
 import { Fragment } from 'react';
-import { AddDeckModal } from '../../components/Modals';
+import { DeckFromSchema, DeckModal } from '../../components/Modals';
 import { DeckList } from '../../components/Lists';
-import { useDecksObserver } from '../../api/hooks';
+import { useCreateDeck, useDecksObserver } from '../../api/hooks';
 import { Container } from '../../components/Container';
 
 export const Decks = () => {
     const { data } = useDecksObserver();
 
+    const createDeck = useCreateDeck();
+
+    const onConfirm = async ({ title }: DeckFromSchema) => {
+        await createDeck.mutateAsync({ title });
+    };
+
     return (
         <Fragment>
             <Container.Header
                 title="Decks"
-                action={<AddDeckModal />}
+                actions={<DeckModal
+                    title="Create Deck"
+                    onConfirm={onConfirm}
+                    confirmLoading={createDeck.isPending}
+                />}
             />
 
             <Container.Content>

@@ -3,8 +3,6 @@ import { axiosApiInstance } from './ApiConfig.ts';
 export type Deck = {
     id: number,
     title: string
-    originalLanguage?: string,
-    targetLanguage?: string,
 }
 
 export const getDecks = async () => {

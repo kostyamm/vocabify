@@ -1,7 +1,6 @@
 import { ThemeMode, useThemeContext } from '../../contexts';
 import { MoonIcon, SunIcon, SunMoonIcon } from '../../components/Icons';
 import { Button, Dropdown } from 'antd';
-import { CSSProperties } from 'react';
 
 export const ThemeDropdown = () => {
     const { theme, setTheme } = useThemeContext();
@@ -33,18 +32,13 @@ export const ThemeDropdown = () => {
     return (
         <Dropdown
             menu={{ items: dropdownItems }}
-            placement="bottomRight"
             arrow={{ pointAtCenter: true }}
+            placement="bottomRight"
             trigger={['click']}
+            overlayStyle={{ minWidth: 120 }}
+            autoAdjustOverflow
         >
-            {/* Did not use IconButton here to avoid the menu error */}
-            <Button shape="circle" icon={activeTheme()!.icon} style={themeButtonStyle} />
+            <Button shape="circle" icon={activeTheme()!.icon} />
         </Dropdown>
     );
-};
-
-const themeButtonStyle: CSSProperties = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
 };
