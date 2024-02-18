@@ -8,14 +8,13 @@ export const useDataObserver = <T>(queryKey: Array<string>, queryFn: QueryFuncti
         queryFn,
     });
 
-    const [data, setUsers] = useState<Array<T>>(() => {
+    const [data, setUsers] = useState<T | undefined>(() => {
         // Get data from cache
-        const data = queryClient.getQueryData<Array<T>>(queryKey)
-        return data ?? []
+        return queryClient.getQueryData<T>(queryKey)
     })
 
     const queryObserver = useMemo(() => {
-        return new QueryObserver<Array<T>>(queryClient, { queryKey });
+        return new QueryObserver<T>(queryClient, { queryKey });
     }, [queryClient, queryKey]);
 
     useEffect(() => {

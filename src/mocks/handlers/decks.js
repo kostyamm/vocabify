@@ -57,7 +57,7 @@ export const decks = [
 
         return HttpResponse.json(updatedDeck, { status: 201 })
     }),
-    http.get('/decks/:id', ({ params }) => {
+    http.get('/decks/:id', async ({ params }) => {
         const decks = decksData.get(+params.id)
 
         return HttpResponse.json(decks, { status: 201 })

@@ -15,6 +15,7 @@ type HeaderActions = ReactNode | Array<ReactNode>
 export type ContainerHeaderProps = {
     title: string | ReactNode,
     actions?: HeaderActions,
+    loading?: boolean;
 }
 
 export type ContainerHeaderActionsProps = {

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
     createDeck,
     deleteDeck,
@@ -10,13 +10,6 @@ import {
 import { useDataObserver } from './useDataObserver.ts';
 
 const KEY = 'decks';
-
-export const useGetDeckById = (id: string | number) => {
-    return useQuery({
-        queryKey: [KEY, id],
-        queryFn: () => getDeckById(id),
-    });
-};
 
 export const useCreateDeck = () => {
     const queryClient = useQueryClient();
@@ -40,12 +33,14 @@ export const useCreateDeck = () => {
     });
 };
 
-export const useUpdateDeck = () => {
+export const useUpdateDeck = (deckId: number) => {
     const queryClient = useQueryClient();
 
     const onSuccess = (updatedDeck: Deck) => {
-        const updater = (prevDecks: Array<Deck> | undefined) => {
-            return prevDecks?.map(deck => {
+        const updaterObject = () => updatedDeck
+
+        const updaterArray = (prevDeck: Array<Deck> | undefined) => {
+            return prevDeck?.map(deck => {
                 if (deck.id === updatedDeck.id) {
                     return updatedDeck
                 }
@@ -54,34 +49,42 @@ export const useUpdateDeck = () => {
             });
         }
 
-        queryClient.setQueryData([KEY], updater);
+        queryClient.setQueryData([KEY], updaterArray);
+        queryClient.setQueryData([KEY, deckId.toString()], updaterObject);
     };
 
     return useMutation({
-        mutationKey: [KEY],
+        mutationKey: [KEY, deckId.toString()],
         mutationFn: updateDeck,
         onSuccess,
     });
 };
 
-export const useDeleteDeck = () => {
+export const useDeleteDeck = (deckId: number) => {
     const queryClient = useQueryClient();
 
     const onSuccess = (deckId: Deck['id']) => {
-        const updater = (decks: Array<Deck> | undefined) => {
+        const updaterObject = () => null
+
+        const updaterArray = (decks: Array<Deck> | undefined) => {
             return decks?.filter(({ id }) => id !== +deckId)
         }
 
-        queryClient.setQueryData([KEY], updater);
+        queryClient.setQueryData([KEY], updaterArray);
+        queryClient.setQueryData([KEY, deckId.toString()], updaterObject);
     };
 
     return useMutation({
-        mutationKey: [KEY],
+        mutationKey: [KEY, deckId.toString()],
         mutationFn: deleteDeck,
         onSuccess,
     });
 };
 
-export const useDecksObserver = () => {
-    return useDataObserver<Deck>([KEY], getDecks)
+export const useGetDecksObserver = () => {
+    return useDataObserver<Array<Deck>>([KEY], getDecks)
+}
+
+export const useGetDeckObserver = (deckId: number) => {
+    return useDataObserver<Deck>([KEY, deckId.toString()], () => getDeckById(deckId))
 }

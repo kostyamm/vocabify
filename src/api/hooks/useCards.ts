@@ -4,15 +4,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const KEY = 'cards';
 
-export const useCardsObserver = (deckId: string) => {
-    return useDataObserver<Card>([KEY, deckId.toString()], () => getCards(deckId))
-}
-
-export const useCreateCard = (deckId: string) => {
+export const useCreateCard = (deckId: number) => {
     const queryClient = useQueryClient();
 
     const onSuccess = (newCard: Card) => {
-        queryClient.setQueryData([KEY, deckId],
+        queryClient.setQueryData([KEY, deckId.toString()],
             (prevCards: Array<Card> | undefined) => {
                 if (prevCards) {
                     return [newCard, ...prevCards]
@@ -24,13 +20,13 @@ export const useCreateCard = (deckId: string) => {
     };
 
     return useMutation({
-        mutationKey: [KEY, deckId],
+        mutationKey: [KEY, deckId.toString()],
         mutationFn: createCard,
         onSuccess,
     });
 };
 
-export const useUpdateCard = (deckId: string) => {
+export const useUpdateCard = (deckId: number) => {
     const queryClient = useQueryClient();
 
     const onSuccess = (updatedCard: Card) => {
@@ -44,18 +40,17 @@ export const useUpdateCard = (deckId: string) => {
             });
         }
 
-        queryClient.setQueryData([KEY, deckId], updater);
+        queryClient.setQueryData([KEY, deckId.toString()], updater);
     };
 
     return useMutation({
-        mutationKey: [KEY, deckId],
+        mutationKey: [KEY, deckId.toString()],
         mutationFn: updateCard,
         onSuccess,
     });
 };
 
-
-export const useDeleteCards = (deckId: string) => {
+export const useDeleteCards = (deckId: number) => {
     const queryClient = useQueryClient();
 
     const onSuccess = (cardId: Card['id']) => {
@@ -63,12 +58,16 @@ export const useDeleteCards = (deckId: string) => {
             return cards?.filter(({ id }) => id !== +cardId)
         }
 
-        queryClient.setQueryData([KEY, deckId], updater);
+        queryClient.setQueryData([KEY, deckId.toString()], updater);
     };
 
     return useMutation({
-        mutationKey: [KEY, deckId],
+        mutationKey: [KEY, deckId.toString()],
         mutationFn: deleteCard,
         onSuccess,
     });
 };
+
+export const useGetCardsObserver = (deckId: number) => {
+    return useDataObserver<Array<Card>>([KEY, deckId.toString()], () => getCards(deckId))
+}

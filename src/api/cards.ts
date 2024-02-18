@@ -8,7 +8,7 @@ export type Card = {
     studied?: boolean
 }
 
-export const getCards = async (deckId: string | number) => {
+export const getCards = async (deckId: number) => {
     const config = {
         params: {
             deck_id: deckId,
@@ -42,7 +42,7 @@ export const updateCard = async (data: Card) => {
     }
 }
 
-export const deleteCard = async (id: number | string) => {
+export const deleteCard = async (id: number) => {
     try {
         const { data } = await axiosApiInstance.delete(`/cards/${id}`);
         return data;

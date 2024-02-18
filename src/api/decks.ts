@@ -15,7 +15,7 @@ export const getDecks = async () => {
     }
 }
 
-export const getDeckById = async (id: string | number) => {
+export const getDeckById = async (id: number) => {
     try {
         const { data } = await axiosApiInstance.get(`/decks/${id}`)
         return data
@@ -43,7 +43,7 @@ export const updateDeck = async (data: Deck) => {
     }
 }
 
-export const deleteDeck = async (id: number | string) => {
+export const deleteDeck = async (id: number) => {
     try {
         const { data } = await axiosApiInstance.delete(`/decks/${id}`)
         return data

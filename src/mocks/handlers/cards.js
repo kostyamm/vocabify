@@ -51,7 +51,7 @@ mockCardsData.forEach((card) => {
 })
 
 export const cards = [
-    http.get('/cards', ({ request }) => {
+    http.get('/cards', async ({ request }) => {
         const url = new URL(request.url)
         const deckId = url.searchParams.get('deck_id')
 
@@ -66,8 +66,6 @@ export const cards = [
         newCard.id = Date.now()
 
         cardsData.set(newCard.id, newCard)
-
-        await delay(1000)
 
         return HttpResponse.json(newCard, { status: 201 })
     }),
@@ -85,6 +83,8 @@ export const cards = [
     }),
     http.delete('/cards/:id', async ({ params }) => {
         cardsData.delete(params.id)
+
+        await delay(1000)
 
         return HttpResponse.json(params.id, { status: 201 })
     }),

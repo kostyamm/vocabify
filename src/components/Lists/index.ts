@@ -1,1 +1,2 @@
-export * from './DeckList.tsx'
+export * from './DeckList'
+export * from './CardList'

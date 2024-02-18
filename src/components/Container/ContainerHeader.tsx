@@ -1,10 +1,15 @@
 import { Fragment } from 'react';
-import { Flex, Grid, Typography } from 'antd';
+import { Flex, Grid, Skeleton, Typography } from 'antd';
 import { ContainerHeaderActionsProps, ContainerHeaderProps } from './Container.types.tsx';
 
-export const ContainerHeader = ({ title, actions }: ContainerHeaderProps) => {
-    const breakpoint = Grid.useBreakpoint()
-    const isMobile = !breakpoint.md
+export const ContainerHeader = ({ title, actions, loading }: ContainerHeaderProps) => {
+    const breakpoint = Grid.useBreakpoint();
+    const isMobile = !breakpoint.md;
+
+    if (loading) {
+        return <Skeleton.Input active block style={{ height: 50, marginBottom: 32 }} />;
+    }
+
     return (
         <Flex
             align="center"
